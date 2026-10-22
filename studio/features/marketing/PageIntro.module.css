@@ -61,7 +61,7 @@
   stroke-linecap: round;
 }
 
-/* the bunny with its speech bubble */
+/* the brand sticker with its speech bubble */
 .stage {
   position: relative;
   display: flex;
@@ -71,7 +71,7 @@
   padding-top: 2.5rem;
 }
 
-.bunny {
+.sticker {
   width: auto;
   height: 14rem;
   transform-origin: 50% 95%;
@@ -165,7 +165,7 @@
     width: 12rem;
   }
 
-  .bunny {
+  .sticker {
     height: 10.5rem;
   }
 
@@ -176,7 +176,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bunny,
+  .sticker,
   .sparkle,
   .heart {
     animation: none;

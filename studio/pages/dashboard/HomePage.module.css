@@ -1,4 +1,4 @@
-/* The top of home: a lilac panel with the sizes to start from, and the bunny peeking over its edge. */
+/* The top of home: a lilac panel with the sizes to start from, and the brand sticker peeking over its edge. */
 .hero {
   position: relative;
   display: flex;
@@ -32,7 +32,7 @@
   font-weight: 600;
 }
 
-.bunny {
+.sticker {
   position: absolute;
   right: 1.5rem;
   bottom: -2.2rem;
@@ -47,7 +47,7 @@
     padding-right: var(--space-6);
   }
 
-  .bunny {
+  .sticker {
     display: none;
   }
 }

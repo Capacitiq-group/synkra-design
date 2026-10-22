@@ -4,7 +4,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { PageLoader } from '@/app/PageLoader'
 import { AccountMenu } from '@/features/auth/AccountMenu'
 import { useAuth } from '@/features/auth/AuthProvider'
-const bunny = '/studio-assets/bunny-sticker.webp'
+const sticker = '/studio-assets/synkra-sticker.webp'
 import { IconButton, LinkButton, Logo } from '@/ui'
 import { cx } from '@/lib/cx'
 import styles from './MarketingLayout.module.css'
@@ -94,7 +94,7 @@ export function MarketingFooter() {
       <svg className={styles.wave} viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 28 C 160 6, 320 6, 480 22 S 800 40, 960 20 S 1280 2, 1440 22 L 1440 40 L 0 40 Z" />
       </svg>
-      <img className={styles.peek} src={bunny} alt="" width={110} height={150} draggable={false} />
+      <img className={styles.peek} src={sticker} alt="" width={110} height={150} draggable={false} />
       <div className={styles.footerInner}>
         <div className={styles.footerBrand}>
           <Logo height={28} />

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-const bunnyMark = '/studio-assets/bunny-mark.webp'
+const synkraMark = '/studio-assets/synkra-mark.webp'
 import { cx } from '@/lib/cx'
 import styles from './Logo.module.css'
 
@@ -11,7 +11,7 @@ export interface LogoProps {
   title?: string
 }
 
-/** The Synkra mark: the bunny sticker, plus the italic wordmark. */
+/** The Synkra mark: the bento S monogram, plus the italic wordmark. */
 export function Logo({ variant = 'full', height = 28, className, title = 'Synkra' }: LogoProps) {
   return (
     <span
@@ -20,7 +20,7 @@ export function Logo({ variant = 'full', height = 28, className, title = 'Synkra
       role="img"
       aria-label={title}
     >
-      <img className={styles.mark} src={bunnyMark} alt="" width={height} height={height} draggable={false} />
+      <img className={styles.mark} src={synkraMark} alt="" width={height} height={height} draggable={false} />
       {variant === 'full' ? (
         <span className={styles.word} aria-hidden="true">
           Synkra

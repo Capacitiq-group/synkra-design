@@ -1,7 +1,7 @@
-const bunny = '/studio-assets/bunny-sticker.webp'
+const sticker = '/studio-assets/synkra-sticker.webp'
 import styles from './AuthBrandPanel.module.css'
 
-/** Decorative brand side of the auth screens: the bunny with a taped-down card. Hidden below 960px. */
+/** Decorative brand side of the auth screens: the brand sticker with a taped-down card. Hidden below 960px. */
 export function AuthBrandPanel() {
   return (
     <aside className={styles.panel} aria-label="About Synkra">
@@ -19,7 +19,7 @@ export function AuthBrandPanel() {
             <span />
           </span>
         </div>
-        <img className={styles.bunny} src={bunny} alt="" width={523} height={713} draggable={false} />
+        <img className={styles.sticker} src={sticker} alt="" width={523} height={713} draggable={false} />
         <span className={styles.bubble}>welcome!</span>
         <svg className={styles.sparkle} width="44" height="44" viewBox="0 0 44 44">
           <path d="M22 4 C 23 16, 28 21, 40 22 C 28 23, 23 28, 22 40 C 21 28, 16 23, 4 22 C 16 21, 21 16, 22 4 Z" />

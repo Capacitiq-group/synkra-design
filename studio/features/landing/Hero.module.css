@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-/* The bunny, big, standing on its own little shadow */
+/* The brand sticker, big, standing on its own little shadow */
 .stage {
   position: relative;
   display: flex;
@@ -19,7 +19,7 @@
   height: 22.5rem;
 }
 
-.bunny {
+.sticker {
   position: relative;
   z-index: 1;
   width: auto;
@@ -30,7 +30,7 @@
   user-select: none;
 }
 
-.bunny:hover {
+.sticker:hover {
   animation: wiggle 0.6s ease-in-out;
 }
 
@@ -275,7 +275,7 @@
     height: 17rem;
   }
 
-  .bunny {
+  .sticker {
     height: 15.3rem;
   }
 
@@ -300,8 +300,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bunny,
-  .bunny:hover,
+  .sticker,
+  .sticker:hover,
   .ground {
     animation: none;
   }

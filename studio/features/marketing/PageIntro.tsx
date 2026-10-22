@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-const bunny = '/studio-assets/bunny-sticker.webp'
+const sticker = '/studio-assets/synkra-sticker.webp'
 import styles from './PageIntro.module.css'
 
 export interface PageIntroProps {
@@ -7,11 +7,11 @@ export interface PageIntroProps {
   eyebrow: string
   title: ReactNode
   lead: string
-  /** What the bunny says in its speech bubble. */
+  /** What the sticker badge says in its speech bubble. */
   bubble: string
 }
 
-/** The top of a marketing page: handwritten eyebrow, big serif title, lead, and the bunny with a speech bubble. */
+/** The top of a marketing page: handwritten eyebrow, big serif title, lead, and the brand sticker with a speech bubble. */
 export function PageIntro({ eyebrow, title, lead, bubble }: PageIntroProps) {
   return (
     <header className={styles.intro}>
@@ -27,7 +27,7 @@ export function PageIntro({ eyebrow, title, lead, bubble }: PageIntroProps) {
         <svg className={styles.heart} width="36" height="32" viewBox="0 0 46 40">
           <path d="M23 36 C 8 26, 3 18, 6 11 C 9 4, 19 4, 23 12 C 27 4, 37 4, 40 11 C 43 18, 38 26, 23 36 Z" />
         </svg>
-        <img className={styles.bunny} src={bunny} alt="" width={523} height={713} draggable={false} />
+        <img className={styles.sticker} src={sticker} alt="" width={523} height={713} draggable={false} />
         <span className={styles.ground} />
         <span className={styles.bubble}>{bubble}</span>
       </div>

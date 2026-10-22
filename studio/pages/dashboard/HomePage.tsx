@@ -1,7 +1,7 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { DesignTile } from '@/features/dashboard/DesignTile'
-const bunny = '/studio-assets/bunny-sticker.webp'
+const sticker = '/studio-assets/synkra-sticker.webp'
 import { createUrl, presetParts } from '@/features/presets'
 import { quickPresets, useSizePresets } from '@/lib/sizePresets'
 import { TemplateCard } from '@/features/templates/TemplateCard'
@@ -63,7 +63,7 @@ export default function HomePage() {
             )
           })}
         </ul>
-        <img className={homeStyles.bunny} src={bunny} alt="" width={523} height={713} draggable={false} />
+        <img className={homeStyles.sticker} src={sticker} alt="" width={523} height={713} draggable={false} />
       </section>
 
       <section aria-labelledby="recent" className={styles.section}>

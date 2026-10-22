@@ -1,7 +1,7 @@
 import { PenLine } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-const bunny = '/studio-assets/bunny-sticker.webp'
+const sticker = '/studio-assets/synkra-sticker.webp'
 import { CreateDesignDialog } from '@/features/create/CreateDesignDialog'
 import { PresetIcon } from '@/features/PresetIcon'
 import { createUrl } from '@/features/presets'
@@ -24,7 +24,7 @@ export function Hero() {
           <span>♥</span>
           <span>♥</span>
         </span>
-        <img className={styles.bunny} src={bunny} alt="" width={523} height={713} draggable={false} />
+        <img className={styles.sticker} src={sticker} alt="" width={523} height={713} draggable={false} />
         <span className={styles.ground} aria-hidden="true" />
         <span className={styles.bubble} aria-hidden="true">
           hi there!

@@ -1,0 +1,30 @@
+/*
+ * SYNKRA Design — Soft Bento Minimalism shell tokens.
+ * Layered on top of styles/tokens.css (which the whole studio consumes). These describe the
+ * application shell and dashboard surfaces only: warm bone canvas, obsidian navigation,
+ * chartreuse reserved for active states, 1.75rem bento radii and pill controls.
+ * Components must use these variables and never hard-code the palette.
+ */
+:root {
+  --synkra-bone: #f4f3f0;
+  --synkra-card: #ffffff;
+  --synkra-ink: #15161a;
+  --synkra-ink-soft: #24262e;
+  --synkra-ink-text: #fbfbfc;
+  --synkra-lime: #d6f824;
+  --synkra-lime-soft: #eefbc0;
+  --synkra-lime-fg: #141c00;
+  --synkra-peach: #fde6d2;
+  --synkra-sky: #d8e9fe;
+  --synkra-card-border: rgb(0 0 0 / 0.05);
+  --synkra-dark-border: rgb(255 255 255 / 0.1);
+  --synkra-shadow-bento:
+    0 2px 8px -2px rgb(0 0 0 / 0.03),
+    0 1px 3px -1px rgb(0 0 0 / 0.02);
+  --synkra-shadow-float:
+    0 12px 32px -12px rgb(21 22 26 / 0.28),
+    0 4px 12px -4px rgb(21 22 26 / 0.18);
+  --radius-bento: 1.75rem;
+  --radius-bento-lg: 2rem;
+  --radius-inner: 1rem;
+}

@@ -1,0 +1,111 @@
+/* Coming-soon stub pages (Video Editor, AI Studio) — Soft Bento Minimalism. */
+
+.wrap {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 12px 0 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 34rem;
+  border-radius: var(--radius-bento);
+  background: var(--synkra-card);
+  border: 1px solid var(--synkra-card-border);
+  box-shadow: var(--synkra-shadow-bento);
+  padding: 36px 28px 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.iconCircle {
+  display: grid;
+  place-items: center;
+  inline-size: 64px;
+  block-size: 64px;
+  border-radius: 1.25rem;
+  margin-block-end: 4px;
+}
+
+.iconCircle[data-tint='sky'] {
+  background: var(--synkra-sky);
+  color: var(--synkra-ink);
+}
+
+.iconCircle[data-tint='peach'] {
+  background: var(--synkra-peach);
+  color: var(--synkra-ink);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 2px 0 0;
+  font-size: clamp(24px, 4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+}
+
+.text {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 42ch;
+}
+
+.note {
+  margin: 2px 0 0;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-block-start: 10px;
+}
+
+.homeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9999px;
+  background: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 120ms ease,
+    transform 120ms ease;
+}
+
+.homeButton:hover {
+  background: #e3fa54;
+}
+
+.homeButton:active {
+  transform: scale(0.98);
+}

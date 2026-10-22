@@ -1,0 +1,167 @@
+/*
+ * Synkra design tokens — Soft Bento Minimalism: a warm bone page, high-contrast obsidian ink,
+ * chartreuse (lime) highlights reserved for active states, and pastel peach/sky accents.
+ * Components must use these variables and never hard-code colours.
+ * There is one light theme, with a high-contrast variant (the `data-contrast='more'` block at the end).
+ */
+:root {
+  /* Brand — lime scale, anchored by obsidian ink */
+  --violet-50: #f6f8ea;
+  --violet-100: #ecf3d2;
+  --violet-200: #d9eaa8;
+  --violet-300: #c0db6e;
+  --violet-400: #a6c93e;
+  --violet-500: #8cb424;
+  --violet-600: #6f9418;
+  --violet-700: #587a16;
+  --violet-800: #486217;
+  --violet-900: #3a4f14;
+  --violet-950: #1f2d08;
+
+  /* Ink and pastels — obsidian ink with warm pastels */
+  --ink: #15161a;
+  --paper: #ffffff;
+  --pastel-lilac: #fde6d2;
+  --pastel-pink: #ffe1d1;
+  --pastel-blush: #ffd0b8;
+  --pastel-butter: #ffe8a8;
+  --pastel-mint: #c4ecd9;
+  --pastel-sky: #d8e9fe;
+
+  /* Semantic — light. The accent is obsidian ink; selected and hovered things get a pale lime wash, and the
+     chartreuse accent is kept for active states and drawn accents (--accent-lilac), never for whole surfaces. */
+  --color-brand: var(--ink);
+  --color-brand-hover: #24262e;
+  --color-brand-active: #0c0d10;
+  --color-brand-soft: #f3f8dc;
+  --color-brand-soft-hover: #e7f3be;
+  --color-on-brand: var(--paper);
+  --accent-lilac: #65a30d;
+
+  /* Call to action: obsidian pills with a lime offset shadow */
+  --color-cta: var(--ink);
+  --color-cta-hover: #24262e;
+  --color-on-cta: var(--paper);
+  --color-cta-shadow: #c0db6e;
+
+  --color-bg: #f4f3f0;
+  --color-bg-subtle: #f0eee9;
+  --color-bg-muted: #e9e7e2;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-canvas-workspace: #e8e6e0; /* area around the artboard in the editor */
+  --color-border: #e7e4de;
+  --color-border-strong: #d6d2ca;
+  --color-checker: #d6d2ca; /* transparency checkerboards; high contrast leaves it, so colours preview the same */
+  --color-text: var(--ink);
+  --color-text-muted: #5f5f66;
+  --color-text-subtle: #6b6b72;
+  --color-overlay: rgb(21 22 26 / 0.5);
+  /* The slideshow stage is black and its text white in every theme: it is a projected screen, not chrome. */
+  --color-stage: #000000;
+  --color-on-stage: #ffffff;
+
+  --color-success: #15803d;
+  --color-success-soft: #dcfce7;
+  --color-warning: #b45309;
+  --color-warning-soft: #fef3c7;
+  --color-danger: #b91c1c;
+  --color-danger-soft: #fee2e2;
+  --color-info: #1d4ed8;
+  --color-info-soft: #dbeafe;
+
+  --focus-ring: 0 0 0 3px rgb(101 163 13 / 0.4);
+  --selection-color: #65a30d; /* canvas selection handles & guides */
+  --guide-color: #ea580c;
+
+  /* Typography — Outfit everywhere (rounded geometric sans), Caveat stays for hand-drawn accents */
+  --font-sans: 'Outfit Variable', 'Outfit', 'Nunito Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Outfit Variable', 'Outfit', system-ui, sans-serif;
+  --font-hand: 'Caveat Variable', 'Caveat', 'Segoe Print', 'Bradley Hand', cursive;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.75rem;
+  --text-5xl: 3.75rem;
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+
+  /* Space (4px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Shape & depth */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(21 22 26 / 0.06), 0 1px 1px rgb(21 22 26 / 0.04);
+  --shadow-md: 0 4px 12px rgb(21 22 26 / 0.08), 0 2px 4px rgb(21 22 26 / 0.04);
+  --shadow-lg: 0 18px 40px rgb(21 22 26 / 0.14), 0 4px 10px rgb(21 22 26 / 0.06);
+  --shadow-artboard: 0 2px 6px rgb(21 22 26 / 0.1), 0 12px 32px rgb(21 22 26 / 0.1);
+  --shadow-card: 0 0 0 1px rgb(21 22 26 / 0.05), 0 2px 0 rgb(21 22 26 / 0.04), 0 28px 50px -18px rgb(21 22 26 / 0.28);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+
+  /* Layout */
+  --editor-topbar-h: 56px;
+  --editor-rail-w: 72px;
+  --editor-panel-w: 340px;
+  --editor-toolbar-h: 48px;
+  --z-dropdown: 50;
+  --z-sticky: 100;
+  --z-drawer: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  color-scheme: light;
+}
+
+/*
+ * High contrast: the same light theme with darker text, lines and focus rings. Set on <html> by src/lib/contrast.ts.
+ * Colours only, and never the page, workspace or stage backgrounds, so presenting and exports look the same.
+ */
+:root[data-contrast='more'] {
+  --color-text-muted: #38383d; /* at least 9:1 on every surface, the workspace and the lime washes */
+  --color-text-subtle: #434348; /* at least 7.8:1 */
+  /* Mid-tones: tracks and meters pair them with ink fills, so they keep 3:1 against ink as well as the surfaces. */
+  --color-border: #79797f; /* at least 3.3:1 on every surface, 3.7:1 against ink */
+  --color-border-strong: #6f6f75; /* at least 3.7:1 on every surface, 3.3:1 against ink */
+  --accent-lilac: #3f6212;
+  --selection-color: #3f6212; /* 5.6:1 on the workspace */
+  --guide-color: #9a3412; /* told apart from the lime selection */
+  --color-success: #166534;
+  --color-warning: #92400e;
+  --color-danger: #991b1b;
+  --color-info: #1e40af;
+  /* One shadow, so the `inset var(--focus-ring)` rings keep working. */
+  --focus-ring: 0 0 0 3px #3f6212;
+  --shadow-artboard: 0 0 0 1px var(--color-border-strong), 0 2px 6px rgb(21 22 26 / 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+  }
+}

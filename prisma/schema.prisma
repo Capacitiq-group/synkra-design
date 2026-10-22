@@ -1,0 +1,319 @@
+// SYNKRA Design Studio — data model
+// Ported from the Doory backend schema (Attribution Assurance License, (c) Siam) to Prisma/SQLite.
+// JSON-valued columns are TEXT holding serialized JSON (SQLite has no native JSON type).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String       @id @default(uuid())
+  email           String       @unique
+  passwordHash    String?
+  displayName     String       @default("")
+  avatarPath      String?
+  isEmailVerified Boolean      @default(true)
+  isActive        Boolean      @default(true)
+  isStaff         Boolean      @default(false)
+  googleSub       String?
+  failedLogins    Int          @default(0)
+  lockoutUntil    DateTime?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  sessions   Session[]
+  designs    Design[]
+  folders    Folder[]
+  assets     Asset[]
+  brandKits  BrandKit[]
+  fonts      FontFamily[]
+  apiTokens  ApiToken[]
+  comments   Comment[]
+  authTokens AuthToken[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Folder {
+  id        String   @id @default(uuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name      String
+  parentId  String?
+  parent    Folder?  @relation("FolderTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children  Folder[] @relation("FolderTree")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+}
+
+model Design {
+  id            String       @id @default(uuid())
+  ownerId       String
+  owner         User         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title         String       @default("Untitled design")
+  width         Int          @default(1080)
+  height        Int          @default(1080)
+  preset        String       @default("")
+  document      String       @default("{}")
+  pageCount     Int          @default(1)
+  thumbnailPath String?
+  folderId      String?
+  starred       Boolean      @default(false)
+  revision      Int          @default(1)
+  trashedAt     DateTime?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  versions   DesignVersion[]
+  shareLinks ShareLink[]
+  comments   Comment[]
+
+  @@index([ownerId, trashedAt])
+  @@index([ownerId, folderId])
+}
+
+model DesignVersion {
+  id            String   @id @default(uuid())
+  designId      String
+  design        Design   @relation(fields: [designId], references: [id], onDelete: Cascade)
+  label         String   @default("")
+  isAuto        Boolean  @default(false)
+  document      String
+  pageCount     Int      @default(1)
+  thumbnailPath String?
+  createdAt     DateTime @default(now())
+
+  @@index([designId])
+}
+
+model Asset {
+  id         String   @id @default(uuid())
+  ownerId    String
+  owner      User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  kind       String // image | svg | audio
+  name       String
+  filePath   String
+  thumbPath  String?
+  width      Int      @default(0)
+  height     Int      @default(0)
+  size       Int      @default(0)
+  mime       String   @default("")
+  tags       String   @default("[]")
+  meta       String   @default("{}")
+  durationMs Int?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([ownerId, kind])
+}
+
+model TemplateCategory {
+  id        String     @id @default(uuid())
+  slug      String     @unique
+  name      String
+  icon      String     @default("")
+  sortOrder Int        @default(0)
+  templates Template[]
+}
+
+model Template {
+  id            String           @id @default(uuid())
+  slug          String           @unique
+  title         String
+  description   String           @default("")
+  categoryId    String?
+  category      TemplateCategory? @relation(fields: [categoryId], references: [id])
+  tags          String           @default("[]")
+  width         Int              @default(1080)
+  height        Int              @default(1080)
+  preset        String           @default("")
+  pageCount     Int              @default(1)
+  document      String
+  thumbnailPath String?
+  isFeatured    Boolean          @default(false)
+  isPublished   Boolean          @default(true)
+  useCount      Int              @default(0)
+  createdAt     DateTime         @default(now())
+}
+
+model ElementPack {
+  id            String    @id @default(uuid())
+  slug          String    @unique
+  name          String
+  kind          String
+  license       String    @default("CC0-1.0")
+  licenseUrl    String    @default("")
+  attribution   String    @default("")
+  sourceUrl     String    @default("")
+  sourceRef     String    @default("")
+  description   String    @default("")
+  thumbnailPath String?
+  sortOrder     Int       @default(0)
+  isPublished   Boolean   @default(true)
+  elements      Element[]
+}
+
+model Element {
+  id             String      @id @default(uuid())
+  packId         String
+  pack           ElementPack @relation(fields: [packId], references: [id], onDelete: Cascade)
+  key            String
+  name           String
+  kind           String // shape | line | icon | sticker | illustration | frame | graphic
+  style          String      @default("")
+  tags           String      @default("[]")
+  searchName     String      @default("")
+  searchTags     String      @default("")
+  svgPath        String
+  contentHash    String      @default("")
+  width          Int         @default(0)
+  height         Int         @default(0)
+  colors         String      @default("[]")
+  isRecolorable  Boolean     @default(false)
+  isPublished    Boolean     @default(true)
+  sortOrder      Int         @default(0)
+
+  @@index([packId, kind])
+  @@index([searchName])
+}
+
+model FontFamily {
+  id          String        @id @default(uuid())
+  key         String        @unique // `system:<slug>` or `user:<ownerId>:<slug>`
+  family      String
+  slug        String
+  category    String        @default("sans-serif")
+  scripts     String        @default("[]")
+  isVariable  Boolean       @default(false)
+  popularity  Int           @default(1000)
+  license     String        @default("OFL-1.1")
+  source      String        @default("fontsource") // fontsource | upload
+  ownerId     String?
+  owner       User?         @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  isPublished Boolean       @default(true)
+  variants    FontVariant[]
+
+  @@index([family])
+  @@index([ownerId])
+}
+
+model FontVariant {
+  id           String     @id @default(uuid())
+  familyId     String
+  family       FontFamily @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  weight       Int        @default(400)
+  style        String     @default("normal")
+  subset       String     @default("latin")
+  unicodeRange String     @default("")
+  filePath     String
+  format       String     @default("woff2")
+  size         Int        @default(0)
+
+  @@index([familyId])
+}
+
+model BrandKit {
+  id        String   @id @default(uuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name      String
+  isDefault Boolean  @default(false)
+  colors    String   @default("[]")
+  fonts     String   @default("[]")
+  logos     String   @default("[]")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([ownerId])
+}
+
+model ShareLink {
+  id             String    @id @default(uuid())
+  designId       String
+  design         Design    @relation(fields: [designId], references: [id], onDelete: Cascade)
+  token          String    @unique
+  role           String    @default("view") // view | comment | edit
+  isActive       Boolean   @default(true)
+  expiresAt      DateTime?
+  passwordHash   String?
+  createdBy      String?
+  lastAccessedAt DateTime?
+  accessCount    Int       @default(0)
+  createdAt      DateTime  @default(now())
+
+  @@index([designId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  designId  String
+  design    Design   @relation(fields: [designId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  body      String
+  pageId    String?
+  x         Float?
+  y         Float?
+  parentId  String?
+  resolved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([designId])
+}
+
+model ApiToken {
+  id         String    @id @default(uuid())
+  ownerId    String
+  owner      User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name       String
+  prefix     String    @unique
+  secretHash String
+  scopes     String    @default("[]")
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  revokedAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([ownerId])
+}
+
+model AuthToken {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String // verify | reset
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([userId])
+}
+
+model EmailMessage {
+  id        String   @id @default(uuid())
+  toEmail   String
+  fromEmail String
+  subject   String
+  text      String
+  html      String   @default("")
+  kind      String   @default("")
+  status    String   @default("queued") // queued | sent | failed
+  createdAt DateTime @default(now())
+}

@@ -1,0 +1,356 @@
+/* SYNKRA Design home dashboard — Soft Bento Minimalism. */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 4px 0;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.lead {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .studioCard {
+    grid-column: span 7;
+  }
+
+  .videoCard,
+  .aiCard {
+    grid-column: span 5;
+  }
+
+  .recentCard {
+    grid-column: span 8;
+  }
+
+  .sideColumn {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.card {
+  border-radius: var(--radius-bento);
+  background: var(--synkra-card);
+  border: 1px solid var(--synkra-card-border);
+  box-shadow: var(--synkra-shadow-bento);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---- Design Studio hero card (obsidian) ---- */
+
+.studioCard {
+  background: var(--synkra-ink);
+  border: 1px solid var(--synkra-dark-border);
+  color: var(--synkra-ink-text);
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.studioCard::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -70px;
+  inset-inline-end: -70px;
+  inline-size: 190px;
+  block-size: 190px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(214 248 36 / 0.22), transparent 68%);
+  pointer-events: none;
+}
+
+.cardEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.studioEyebrow {
+  background: rgb(214 248 36 / 0.16);
+  color: var(--synkra-lime);
+}
+
+.cardTitle {
+  margin: 12px 0 6px;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.studioCard .cardTitle {
+  color: var(--synkra-ink-text);
+  font-size: 24px;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  max-width: 46ch;
+}
+
+.studioCard .cardText {
+  color: rgb(255 255 255 / 0.64);
+  max-width: 42ch;
+}
+
+.studioActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-block-start: 18px;
+}
+
+.limeButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9999px;
+  background: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color 120ms ease,
+    transform 120ms ease;
+}
+
+.limeButton:hover {
+  background: #e3fa54;
+}
+
+.limeButton:active {
+  transform: scale(0.98);
+}
+
+.ghostButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 9999px;
+  background: rgb(255 255 255 / 0.08);
+  color: var(--synkra-ink-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  transition: background-color 120ms ease;
+}
+
+.ghostButton:hover {
+  background: var(--synkra-ink-soft);
+}
+
+/* ---- Video Editor / AI Studio entry cards ---- */
+
+.videoCard,
+.aiCard {
+  gap: 12px;
+}
+
+.iconCircle {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--radius-inner);
+}
+
+.videoCard .iconCircle {
+  background: var(--synkra-sky);
+  color: var(--synkra-ink);
+}
+
+.aiCard .iconCircle {
+  background: var(--synkra-peach);
+  color: var(--synkra-ink);
+}
+
+.soonBadge {
+  background: var(--synkra-peach);
+  color: var(--synkra-ink);
+}
+
+.cardLink {
+  margin-block-start: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 0;
+}
+
+.cardLink:hover {
+  text-decoration: underline;
+}
+
+.cardLink svg {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+/* ---- Recent designs card ---- */
+
+.recentHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-block-end: 14px;
+}
+
+.recentHead h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.viewAll:hover {
+  color: var(--color-text);
+}
+
+.tileGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+}
+
+.skeletonRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+}
+
+.skeletonItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---- Quick links ---- */
+
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.quickLink {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius-inner);
+  background: var(--color-bg);
+  border: 1px solid var(--synkra-card-border);
+  color: var(--color-text);
+  text-decoration: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.quickLink:hover {
+  background: var(--synkra-lime-soft);
+  border-color: rgb(214 248 36 / 0.5);
+}
+
+.quickLink svg {
+  inline-size: 18px;
+  block-size: 18px;
+  color: var(--color-text-muted);
+}
+
+.quickLink:hover svg {
+  color: var(--color-text);
+}
+
+.quickLabel {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ---- Storage card ---- */
+
+.storageCard {
+  gap: 10px;
+}
+
+.storageHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.storageHead h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sideColumn > * {
+  min-width: 0;
+}

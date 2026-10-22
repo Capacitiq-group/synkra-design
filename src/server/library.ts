@@ -388,13 +388,14 @@ export const fontHandlers = {
     const isVariable = params.get('is_variable')
     const where = {
       isPublished: true,
-      source: 'fontsource' as const,
+      source: { in: ['fontsource', 'bundle'] as const },
       ...(category ? { category } : {}),
       ...(isVariable === 'true' ? { isVariable: true } : isVariable === 'false' ? { isVariable: false } : {}),
     }
     const [total, rows] = await Promise.all([
       db.fontFamily.count({ where }),
-      db.fontFamily.findMany({ where, orderBy: [{ popularity: 'asc' }, { family: 'asc' }], include: { variants: true } }),
+      // Family rows only: with ~2,000 families the variant join is paged separately below.
+      db.fontFamily.findMany({ where, orderBy: [{ popularity: 'asc' }, { family: 'asc' }] }),
     ])
     const filtered = rows.filter((row) => {
       if (q && !row.family.toLowerCase().includes(q)) return false
@@ -402,6 +403,15 @@ export const fontHandlers = {
       return true
     })
     const slice = filtered.slice((page - 1) * pageSize, page * pageSize)
+    const variantRows = slice.length
+      ? await db.fontVariant.findMany({ where: { familyId: { in: slice.map((row) => row.id) } } })
+      : []
+    const variantsByFamily = new Map<string, typeof variantRows>()
+    for (const variant of variantRows) {
+      const list = variantsByFamily.get(variant.familyId) ?? []
+      list.push(variant)
+      variantsByFamily.set(variant.familyId, list)
+    }
     const pageUrl = (n: number) => {
       const p = new URLSearchParams(params)
       p.set('page', String(n))
@@ -411,15 +421,18 @@ export const fontHandlers = {
       count: filtered.length,
       next: page * pageSize < filtered.length ? pageUrl(page + 1) : null,
       previous: page > 1 ? pageUrl(page - 1) : null,
-      results: slice.map((row) => ({
-        id: row.id, family: row.family, category: row.category, scripts: JSON.parse(row.scripts) as string[],
-        is_variable: row.isVariable, is_user_font: false, popularity: row.popularity,
-        variants: row.variants.map((v) => ({
-          weight: v.weight, style: v.style as 'normal' | 'italic', url: `/media/${v.filePath}`,
-          subsets: [{ subset: v.subset, url: `/media/${v.filePath}` }],
-        })),
-        unicode_ranges: Object.fromEntries(row.variants.map((v) => [v.subset, v.unicodeRange])),
-      })),
+      results: slice.map((row) => {
+        const variants = variantsByFamily.get(row.id) ?? []
+        return {
+          id: row.id, family: row.family, category: row.category, scripts: JSON.parse(row.scripts) as string[],
+          is_variable: row.isVariable, is_user_font: false, popularity: row.popularity,
+          variants: variants.map((v) => ({
+            weight: v.weight, style: v.style as 'normal' | 'italic', url: `/media/${v.filePath}`,
+            subsets: [{ subset: v.subset, url: `/media/${v.filePath}` }],
+          })),
+          unicode_ranges: Object.fromEntries(variants.map((v) => [v.subset, v.unicodeRange])),
+        }
+      }),
     })
   },
 
@@ -536,6 +549,37 @@ export function configPayload(origin: string): Record<string, unknown> {
   }
 }
 
+// ---------- stock (local bundled image library: Synkra backgrounds + Vecteezy previews) ----------
+
+interface StockIndexEntry {
+  id: string
+  provider: string
+  category: string
+  title: string
+  file: string
+  source_url: string
+  license: string
+  author: string
+  width?: number
+  height?: number
+}
+
+let stockLibraryCache: StockIndexEntry[] | null = null
+
+async function loadStockLibrary(): Promise<StockIndexEntry[]> {
+  if (stockLibraryCache) return stockLibraryCache
+  const { readFile } = await import('fs/promises')
+  const { join } = await import('path')
+  try {
+    const raw = await readFile(join(process.cwd(), 'media', 'stock', 'index.json'), 'utf8')
+    const parsed = JSON.parse(raw) as { items?: StockIndexEntry[] } | StockIndexEntry[]
+    stockLibraryCache = Array.isArray(parsed) ? parsed : (parsed.items ?? [])
+  } catch {
+    stockLibraryCache = []
+  }
+  return stockLibraryCache
+}
+
 export const miscHandlers = {
   async 'GET /health'(): Promise<NextResponse> {
     await db.$queryRaw`SELECT 1`
@@ -558,7 +602,80 @@ export const miscHandlers = {
   },
 
   async 'GET /stock/providers'(): Promise<NextResponse> {
-    return jsonResponse({ providers: [], all: [], default: '' })
+    return jsonResponse({
+      providers: [
+        { name: 'synkra', label: 'Synkra Library', attribution: 'Synkra Design bundled library', url: '' },
+        { name: 'vecteezy', label: 'Vecteezy', attribution: 'Free vector previews from Vecteezy', url: 'https://www.vecteezy.com' },
+      ],
+      all: [],
+      default: 'synkra',
+    })
+  },
+
+  async 'GET /stock/photos'(req: NextRequest): Promise<NextResponse> {
+    await requireUser(req)
+    const params = req.nextUrl.searchParams
+    const q = params.get('q')?.trim().toLowerCase() ?? ''
+    const provider = params.get('provider') ?? 'synkra'
+    const page = Math.max(1, Number(params.get('page') ?? 1) || 1)
+    const perPage = Math.min(60, Math.max(1, Number(params.get('per_page') ?? 30) || 30))
+    const library = await loadStockLibrary()
+    const pool = library.filter((item) => (provider === 'all' ? true : item.provider === provider))
+    const filtered = q ? pool.filter((item) => `${item.title} ${item.category}`.toLowerCase().includes(q)) : pool
+    const start = (page - 1) * perPage
+    const results = filtered.slice(start, start + perPage).map((item) => ({
+      id: item.id,
+      provider: item.provider,
+      thumb_url: `/media/stock/${item.file}`,
+      preview_url: `/media/stock/${item.file}`,
+      width: item.width ?? 0,
+      height: item.height ?? 0,
+      author: item.author,
+      author_url: item.source_url,
+      source_url: item.source_url,
+    }))
+    return jsonResponse({
+      configured: true,
+      provider,
+      total: filtered.length,
+      next_page: start + perPage < filtered.length ? page + 1 : null,
+      results,
+    })
+  },
+
+  async 'POST /stock/photos/import'(req: NextRequest): Promise<NextResponse> {
+    checkCsrf(req)
+    const user = await requireUser(req)
+    rateLimit('upload', user.id, 60, 60_000)
+    const body = await readJson(req)
+    const provider = typeof body.provider === 'string' ? body.provider : ''
+    const id = typeof body.id === 'string' ? body.id : ''
+    const library = await loadStockLibrary()
+    const item = library.find((entry) => entry.id === id && (provider === 'all' || entry.provider === provider))
+      ?? library.find((entry) => entry.id === id)
+    if (!item) throw new HttpError(404, 'not_found', 'That library item does not exist.')
+    const { readFile } = await import('fs/promises')
+    const { join } = await import('path')
+    const sourcePath = join(process.cwd(), 'media', 'stock', item.file)
+    let buffer: Buffer
+    try {
+      buffer = await readFile(sourcePath)
+    } catch {
+      throw new HttpError(404, 'not_found', 'That library item is no longer available.')
+    }
+    const mime = item.file.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg'
+    const file = new File([buffer], item.file.split('/').pop() ?? 'background.jpg', { type: mime })
+    const size = await probeImageSize(buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength), mime)
+    const saved = await saveUpload(file, `assets/${user.id}`)
+    const row = await db.asset.create({
+      data: {
+        ownerId: user.id, kind: 'image', name: item.title.slice(0, 200), filePath: saved.path,
+        size: saved.bytes, mime, width: size.width, height: size.height,
+        tags: JSON.stringify([item.category].filter(Boolean)),
+        meta: JSON.stringify({ provider: item.provider, source_url: item.source_url, license: item.license, author: item.author }),
+      },
+    })
+    return jsonResponse(serializeAsset(row), { status: 201 })
   },
 
   async 'GET /stock/audio/info'(): Promise<NextResponse> {

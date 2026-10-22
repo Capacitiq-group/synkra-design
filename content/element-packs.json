@@ -1,0 +1,30 @@
+{
+  "packs": [
+    {
+      "id": "alphabet-characters",
+      "name": "Alphabet & Numbers",
+      "kind": "sticker",
+      "style": "mixed",
+      "description": "35 decorative character collections: uppercase, lowercase, numbers and punctuation as standalone SVG stickers.",
+      "sort_order": 90,
+      "source": { "type": "generated", "set": "alphabet-library" },
+      "license": { "spdx": "LicenseRef-SYNKRA-Bundled" },
+      "attribution": "SYNKRA Design bundled library",
+      "homepage": "",
+      "normalize": { "mode": "colour" }
+    },
+    {
+      "id": "font-letter-svgs",
+      "name": "Font Letters",
+      "kind": "sticker",
+      "style": "mixed",
+      "description": "Individual letter SVGs cut from decorative display fonts — compose headlines and monograms from vector characters.",
+      "sort_order": 91,
+      "source": { "type": "generated", "set": "font-letters" },
+      "license": { "spdx": "LicenseRef-SYNKRA-Bundled" },
+      "attribution": "SYNKRA Design bundled library",
+      "homepage": "",
+      "normalize": { "mode": "colour" }
+    }
+  ]
+}

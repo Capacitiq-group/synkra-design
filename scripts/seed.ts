@@ -16,6 +16,7 @@ const MEDIA = path.join(ROOT, 'media')
 const PACKS = path.join(ROOT, 'content/packs/node_modules')
 const GENERATED = path.join(ROOT, 'content/generated-elements')
 const DB = new PrismaClient()
+const SEED_ALL_FONTS = process.env.SEED_ALL_FONTS === '1'
 
 function log(step: string, message: string): void {
   console.log(`[seed:${step}] ${message}`)
@@ -165,25 +166,29 @@ const CJK_PREFIXES = ['chinese', 'korean', 'japanese']
 const MAX_FAMILIES = 120
 
 async function seedFonts(): Promise<void> {
-  const wanted = [...FONT_POPULAR.slice(0, MAX_FAMILIES - TEMPLATE_FONTS.length).map((f) => f.id), ...TEMPLATE_FONTS]
-  const slugs = [...new Set(wanted)]
+  const installedStatic = existsSync(path.join(PACKS, '@fontsource')) ? readdirSync(path.join(PACKS, '@fontsource')).sort() : []
+  const wanted = SEED_ALL_FONTS
+    ? [...new Set([...installedStatic, ...TEMPLATE_FONTS])]
+    : [...new Set([...FONT_POPULAR.slice(0, MAX_FAMILIES - TEMPLATE_FONTS.length).map((f) => f.id), ...TEMPLATE_FONTS])]
   let families = 0
   let variants = 0
-  for (const slug of slugs) {
+  for (const slug of wanted) {
     const staticDir = path.join(PACKS, '@fontsource', slug)
     const variableDir = path.join(PACKS, '@fontsource-variable', slug)
     let familyName = slug
     let category = 'sans-serif'
+    let license = 'OFL-1.1'
     let isVariable = false
     let weights: number[] = [400, 700]
     let styles: string[] = ['normal']
     let subsets: string[] = ['latin']
     let fileDir = staticDir
     if (existsSync(staticDir)) {
-      const metadata = JSON.parse(readFileSync(path.join(staticDir, 'metadata.json'), 'utf8')) as { family?: string; category?: string; subsets?: string[]; weights?: number[]; styles?: string[] }
+      const metadata = JSON.parse(readFileSync(path.join(staticDir, 'metadata.json'), 'utf8')) as { family?: string; category?: string; subsets?: string[]; weights?: number[]; styles?: string[]; license?: { type?: string } }
       familyName = metadata.family ?? slug
       category = metadata.category ?? 'sans-serif'
-      weights = [400, 700]
+      license = metadata.license?.type ?? 'OFL-1.1'
+      weights = (metadata.weights?.length ? metadata.weights : [400, 700]).filter((w) => w >= 100 && w <= 900)
       styles = metadata.styles?.filter((s) => s === 'normal' || s === 'italic') ?? ['normal']
       subsets = metadata.subsets ?? ['latin']
     } else if (existsSync(variableDir)) {
@@ -229,13 +234,14 @@ async function seedFonts(): Promise<void> {
       }
     }
     if (rows.length === 0) continue
-    const popularity = FONT_POPULAR.find((f) => f.id === slug)?.popularity ?? 5000
-    const scripts = FONT_POPULAR.find((f) => f.id === slug)?.scripts ?? ['latin']
+    const popular = FONT_POPULAR.find((f) => f.id === slug)
+    const popularity = popular?.popularity ?? 2000
+    const scripts = popular?.scripts ?? installable.slice(0, 6)
     const key = `system:${slug}`
     const existing = await DB.fontFamily.findUnique({ where: { key } })
     const data = {
       key, family: familyName, slug, category, scripts: JSON.stringify(scripts), isVariable, popularity,
-      license: 'OFL-1.1', source: 'fontsource', ownerId: null, isPublished: true,
+      license, source: 'fontsource', ownerId: null, isPublished: true,
     }
     const family = existing
       ? await DB.fontFamily.update({ where: { id: existing.id }, data })
@@ -246,6 +252,46 @@ async function seedFonts(): Promise<void> {
     variants += rows.length
   }
   log('fonts', `seeded ${families} families, ${variants} variants`)
+}
+
+// ---------------------------------------------------------------- bundled fonts (Fonts.zip, source: 1001fonts.com)
+
+async function seedBundleFonts(): Promise<void> {
+  const manifestPath = path.join(ROOT, 'content/bundle-fonts-manifest.json')
+  if (!existsSync(manifestPath)) {
+    log('bundle-fonts', 'no manifest, skipped')
+    return
+  }
+  const entries = JSON.parse(readFileSync(manifestPath, 'utf8')) as { slug: string; family: string; file: string; format: string; weight: number; style: string; license: string; sourceRef: string }[]
+  const byFamily = new Map<string, typeof entries>()
+  for (const entry of entries) {
+    const list = byFamily.get(entry.family) ?? []
+    list.push(entry)
+    byFamily.set(entry.family, list)
+  }
+  let families = 0
+  let variants = 0
+  for (const [family, list] of byFamily) {
+    const slug = list[0].slug.replace(/-\d+$/, '')
+    const key = `bundle:${slug}`
+    const rows = list.map((entry) => ({
+      weight: entry.weight, style: entry.style, subset: 'latin', unicodeRange: '',
+      filePath: entry.file, format: entry.format, size: entry.bytes,
+    }))
+    const data = {
+      key, family, slug, category: 'display', scripts: JSON.stringify(['latin']), isVariable: false,
+      popularity: 100, license: list[0].license, source: 'bundle', ownerId: null, isPublished: true,
+    }
+    const existing = await DB.fontFamily.findUnique({ where: { key } })
+    const row = existing
+      ? await DB.fontFamily.update({ where: { id: existing.id }, data })
+      : await DB.fontFamily.create({ data })
+    await DB.fontVariant.deleteMany({ where: { familyId: row.id } })
+    await DB.fontVariant.createMany({ data: rows.map((r) => ({ ...r, familyId: row.id })) })
+    families += 1
+    variants += rows.length
+  }
+  log('bundle-fonts', `seeded ${families} families, ${variants} variants`)
 }
 
 // ---------------------------------------------------------------- elements
@@ -298,6 +344,12 @@ function nameToTags(name: string): string[] {
 
 async function seedElements(): Promise<void> {
   const manifest = JSON.parse(readFileSync(path.join(REPOS, 'element_packs.json'), 'utf8')) as { packs: PackDef[] }
+  // Extra SYNKRA packs (uploaded libraries: alphabet characters, font letter SVGs) live in git under content/.
+  const extraPath = path.join(ROOT, 'content/element-packs.json')
+  if (existsSync(extraPath)) {
+    const extra = JSON.parse(readFileSync(extraPath, 'utf8')) as { packs: PackDef[] }
+    manifest.packs = [...manifest.packs, ...extra.packs]
+  }
   let totalElements = 0
   for (const pack of manifest.packs) {
     const existing = await DB.elementPack.findUnique({ where: { slug: pack.id } })
@@ -462,6 +514,31 @@ async function seedElements(): Promise<void> {
   log('elements', `total ${totalElements}`)
 }
 
+// ---------------------------------------------------------------- stock image library
+
+async function seedStockLibrary(): Promise<void> {
+  const read = (file: string): unknown[] => {
+    const p = path.join(ROOT, 'content', file)
+    if (!existsSync(p)) return []
+    return JSON.parse(readFileSync(p, 'utf8')) as unknown[]
+  }
+  const backgrounds = read('synkra-backgrounds-manifest.json') as Record<string, string>[]
+  const vecteezy = read('vecteezy-manifest.json') as Record<string, string>[]
+  const items = [
+    ...backgrounds.map((entry) => ({
+      id: entry.id, provider: entry.provider, category: entry.category, title: entry.title,
+      file: entry.file, source_url: entry.source_url, license: entry.license, author: entry.author,
+    })),
+    ...vecteezy.map((entry) => ({
+      id: entry.id, provider: entry.provider, category: entry.category, title: entry.title,
+      file: entry.file, source_url: entry.source_url, license: entry.license, author: entry.author,
+    })),
+  ]
+  mkdirSync(path.join(MEDIA, 'stock'), { recursive: true })
+  writeFileSync(path.join(MEDIA, 'stock', 'index.json'), JSON.stringify({ schema: 1, items }, null, 1))
+  log('stock', `indexed ${items.length} images (${backgrounds.length} backgrounds, ${vecteezy.length} vecteezy)`)
+}
+
 // ---------------------------------------------------------------- run
 
 async function main(): Promise<void> {
@@ -469,7 +546,9 @@ async function main(): Promise<void> {
   await seedTemplates()
   await seedAudio()
   await seedFonts()
+  await seedBundleFonts()
   await seedElements()
+  await seedStockLibrary()
   await DB.$disconnect()
   log('done', 'content seeding complete')
 }

@@ -80,7 +80,7 @@ export function StockTab({ close, onPick }: PanelProps & { onPick?: (ref: AssetR
       const cursor = source === ALL && current() ? cursors.current.pages.get(page) : undefined
       setFailure(null)
       try {
-        const res = await stock.search(q || 'nature', cursor ?? page, source || undefined)
+        const res = await stock.search(q, cursor ?? page, source || undefined)
         if (!current()) return { count: 0, next: null, previous: null, results: [] } // dropped by useAsyncList
         if (typeof res.next_page === 'string') cursors.current.pages.set(page + 1, res.next_page)
         const skipped = res.skipped ?? []

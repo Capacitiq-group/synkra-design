@@ -21,7 +21,8 @@ describe('session bootstrap and route guard', () => {
   })
 
   it('renders protected pages for signed-in users', async () => {
-    renderApp('/dashboard', { user: makeUser() })
+    // The SYNKRA home ('/') is the signed-in landing page with the welcome heading.
+    renderApp('/', { user: makeUser() })
     expect(await screen.findByRole('heading', { name: /Ada/ })).toBeInTheDocument()
   })
 
@@ -32,7 +33,8 @@ describe('session bootstrap and route guard', () => {
 
   it('ignores an unsafe next parameter', async () => {
     const { router } = renderApp('/login?next=https%3A%2F%2Fevil.test', { user: makeUser() })
-    await waitFor(() => expect(router.state.location.pathname).toBe('/dashboard'))
+    // unsafe `next` falls back to '/', the context-aware SYNKRA home
+    await waitFor(() => expect(router.state.location.pathname).toBe('/'))
   })
 
   it('shows a retryable "can’t reach Synkra" state when the session check fails on a protected page', async () => {
@@ -48,7 +50,7 @@ describe('session bootstrap and route guard', () => {
     expect(await screen.findByText('We can’t reach Synkra')).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/dashboard')
     await userEvent.click(screen.getByRole('button', { name: 'Try again' }))
-    expect(await screen.findByRole('heading', { name: /Ada/ })).toBeInTheDocument()
+    expect(await screen.findByRole('button', { name: /Account menu for Ada/ })).toBeInTheDocument()
   })
 
   it('drops to the login page when the session expires mid-use (401)', async () => {
@@ -150,7 +152,7 @@ describe('signup', () => {
     await userEvent.type(screen.getByLabelText(/Email/), 'new@example.com')
     await userEvent.type(screen.getByLabelText(/^Password/, { selector: 'input' }), 'compilers-rule-1')
     await userEvent.click(screen.getByRole('button', { name: 'Create free account' }))
-    await waitFor(() => expect(router.state.location.pathname).toBe('/dashboard'))
+    await waitFor(() => expect(router.state.location.pathname).toBe('/'))
     expect(bodies).toEqual([{ email: 'new@example.com', password: 'compilers-rule-1', display_name: 'Grace Hopper' }])
   })
 

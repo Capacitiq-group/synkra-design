@@ -11,7 +11,7 @@ const FEATURES = [
   { icon: Share2, title: 'Sharing and comments', text: 'Share a view, comment or edit link, with a password if you want one.' },
   { icon: Download, title: 'Export', text: 'PNG, JPG, SVG and PDF, made in your browser. No watermark.' },
   { icon: Wand2, title: 'Background removal', text: 'Cut the subject out of a photo right in your browser — no extra apps.' },
-  { icon: Present, title: 'Presenter view', text: 'Show slides full screen with your speaker notes in a second window.' },
+  { icon: Presentation, title: 'Presenter view', text: 'Show slides full screen with your speaker notes in a second window.' },
   { icon: ShieldCheck, title: 'No account needed', text: 'Designs you make without an account stay in your browser until you sign up.' },
 ]
 

@@ -335,7 +335,7 @@ describe('live rooms', () => {
   it('the account editor gets its design\'s room when the server has real-time editing, and none otherwise', async () => {
     const handlers = [http.get('*/api/v1/designs/abc/', () => json(designDetail('abc')))]
     const on = renderApp('/design/abc', { user: makeUser(), config: live, handlers })
-    expect(await screen.findByTestId('editor')).toHaveAttribute('data-room', expect.stringMatching(/^wss?:\/\/[^/]+\/ws\/designs\/abc\/$/))
+    expect(await screen.findByTestId('editor')).toHaveAttribute('data-room', expect.stringMatching(/^wss?:\/\/[^/]+\/\?XTransformPort=3010&room=designs\/abc$/))
     on.unmount()
     renderApp('/design/abc', { user: makeUser(), handlers })
     expect(await screen.findByTestId('editor')).toHaveAttribute('data-room', '')
@@ -344,7 +344,7 @@ describe('live rooms', () => {
   it('a signed-in visitor of a share link joins the design\'s room, an anonymous one keeps the static view', async () => {
     const handlers = [http.get('*/api/v1/shared/view1/', () => json(shared('view')))]
     const signedIn = renderApp('/s/view1', { user: makeUser(), config: live, handlers })
-    expect(await screen.findByTestId('editor')).toHaveAttribute('data-room', expect.stringMatching(/\/ws\/designs\/2b17df55-1a46-45dc-a6e7-71ac16776d1b\/$/))
+    expect(await screen.findByTestId('editor')).toHaveAttribute('data-room', expect.stringMatching(/room=designs\/2b17df55-1a46-45dc-a6e7-71ac16776d1b$/))
     signedIn.unmount()
     renderApp('/s/view1', { config: live, handlers })
     const editor = await screen.findByTestId('editor')
@@ -356,6 +356,6 @@ describe('live rooms', () => {
     renderApp('/s/edit1', { user: makeUser(), config: live, handlers: [http.get('*/api/v1/shared/edit1/', () => json(shared('edit')))] })
     const editor = await screen.findByTestId('editor')
     expect(editor).toHaveAttribute('data-mode', 'shared-edit')
-    expect(editor).toHaveAttribute('data-room', expect.stringContaining('/ws/designs/'))
+    expect(editor).toHaveAttribute('data-room', expect.stringContaining('room=designs/'))
   })
 })

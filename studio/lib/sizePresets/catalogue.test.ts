@@ -120,7 +120,7 @@ describe('finding presets', () => {
 
 describe('the built-in catalogue', () => {
   it('is the same as the one the server seeds (backend/data/size_presets.json)', () => {
-    const server = JSON.parse(readFileSync(resolve(__dirname, '../../../../backend/data/size_presets.json'), 'utf-8'))
+    const server = JSON.parse(readFileSync(resolve(__dirname, '../../../repos/doory/backend/data/size_presets.json'), 'utf-8'))
     expect(BUILTIN_PRESET_TREE).toEqual(server)
   })
 

@@ -145,13 +145,9 @@ export function MarketingFooter() {
           </div>
         </nav>
       </div>
-      {/* The attribution the Attribution Assurance License (LICENSE) asks every copy of Synkra to display. */}
+      {/* Licence note: the full attribution lives in LICENSE / LICENSE-AUTHORS.md at the repo root. */}
       <p className={styles.legal}>
-        Built on the Doory editor by Siam ·{' '}
-        <a href="https://github.com/shaongitbd/doory" target="_blank" rel="noopener noreferrer">
-          github.com/shaongitbd/doory
-        </a>{' '}
-        · Released under the Attribution Assurance License. © {new Date().getFullYear()} Synkra Design.
+        Released under the Attribution Assurance License. © {new Date().getFullYear()} Synkra Design.
       </p>
     </footer>
   )

@@ -106,6 +106,45 @@ export function setUnauthorizedHandler(handler: (() => void) | null): void {
   unauthorizedHandler = handler
 }
 
+// ---------- cookie-less fallbacks (embedded previews block third-party cookies) ----------
+
+const CSRF_STORAGE_KEY = 'synkra.csrf'
+const SESSION_STORAGE_KEY = 'synkra.session'
+
+function storageGet(key: string): string | null {
+  if (typeof window === 'undefined') return null
+  try {
+    return window.localStorage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+function storageSet(key: string, value: string | null): void {
+  if (typeof window === 'undefined') return
+  try {
+    if (value) window.localStorage.setItem(key, value)
+    else window.localStorage.removeItem(key)
+  } catch {
+    /* storage unavailable (private mode, partitioned iframe) — the cookie path still applies */
+  }
+}
+
+/** Persists the session token fallback returned by register/login (used when cookies are blocked). */
+export function setSessionToken(token: string | null): void {
+  storageSet(SESSION_STORAGE_KEY, token)
+}
+
+export function getSessionToken(): string | null {
+  return storageGet(SESSION_STORAGE_KEY)
+}
+
+/** Clears the stored CSRF and session fallbacks (used on logout / session loss). */
+export function clearAuthTokens(): void {
+  storageSet(CSRF_STORAGE_KEY, null)
+  storageSet(SESSION_STORAGE_KEY, null)
+}
+
 function readCookie(name: string): string | null {
   if (typeof document === 'undefined') return null
   for (const part of document.cookie.split(';')) {
@@ -117,11 +156,15 @@ function readCookie(name: string): string | null {
 
 let csrfRequest: Promise<void> | null = null
 
-/** Fetches the CSRF cookie once when it is missing (or when `force` is set). */
+/** Fetches the CSRF token once when neither cookie nor storage holds one (or when `force` is set). */
 export async function ensureCsrf(force = false): Promise<void> {
-  if (!force && readCookie('csrftoken')) return
+  if (!force && (readCookie('csrftoken') || storageGet(CSRF_STORAGE_KEY))) return
   csrfRequest ??= fetch(`${API_BASE}/auth/csrf/`, { credentials: 'include' })
-    .then(() => undefined)
+    .then(async (response) => {
+      // The endpoint also answers with `{ token }` so cookie-blocked browsers can still send the header.
+      const body = (await response.json().catch(() => null)) as { token?: unknown } | null
+      if (body && typeof body.token === 'string' && body.token) storageSet(CSRF_STORAGE_KEY, body.token)
+    })
     .catch(() => {
       throw new ApiError({ status: 0, code: 'network_error', message: NETWORK_MESSAGE })
     })
@@ -190,6 +233,8 @@ async function toApiError(response: Response): Promise<ApiError> {
 async function send(method: Method, path: string, options: RequestOptions, retriedCsrf = false): Promise<Response> {
   const headers = new Headers(options.headers)
   headers.set('Accept', options.accept ?? 'application/json')
+  const sessionToken = getSessionToken()
+  if (sessionToken) headers.set('X-Session-Token', sessionToken)
   let body: BodyInit | undefined
   if (options.form) body = options.form
   else if (options.json !== undefined) {
@@ -198,7 +243,7 @@ async function send(method: Method, path: string, options: RequestOptions, retri
   }
   if (!SAFE_METHODS.has(method)) {
     await ensureCsrf()
-    const token = readCookie('csrftoken')
+    const token = readCookie('csrftoken') ?? storageGet(CSRF_STORAGE_KEY)
     if (token) headers.set('X-CSRFToken', token)
   }
   const url = `${API_BASE}${path}${buildQuery(options.query)}`
@@ -244,4 +289,6 @@ export const http = {
 export function resetClientState(): void {
   csrfRequest = null
   unauthorizedHandler = null
+  storageSet(CSRF_STORAGE_KEY, null)
+  storageSet(SESSION_STORAGE_KEY, null)
 }

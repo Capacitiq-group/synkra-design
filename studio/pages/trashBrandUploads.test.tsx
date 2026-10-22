@@ -88,8 +88,11 @@ describe('uploads page', () => {
     })
     expect(await screen.findByText('cat.png')).toBeInTheDocument()
     expect(screen.getByText('pets')).toBeInTheDocument()
-    expect(await screen.findByText(/of 100 MB used/)).toBeInTheDocument()
-    expect(screen.getByRole('progressbar', { name: 'Storage used' })).toHaveAttribute('value', '5')
+    // The meter renders twice by design (dashboard sidebar + the uploads page itself).
+    const meters = await screen.findAllByText(/of 100 MB used/)
+    expect(meters.length).toBeGreaterThanOrEqual(1)
+    const bars = screen.getAllByRole('progressbar', { name: 'Storage used' })
+    for (const bar of bars) expect(bar).toHaveAttribute('value', '5')
   })
 
   it('renames an upload and edits its tags', async () => {

@@ -35,7 +35,7 @@ describe('session ids', () => {
   it('builds the view address from the session', () => {
     const url = new URL(presenterViewUrl(SESSION, '/', 'https://synkra.example/design/7'))
     expect(url.origin).toBe('https://synkra.example')
-    expect(url.pathname).toBe('/presenter-view.html')
+    expect(url.pathname).toBe('/presenter-view')
     expect(url.searchParams.get('session')).toBe(SESSION)
     expect(channelName(SESSION)).toContain(SESSION)
   })

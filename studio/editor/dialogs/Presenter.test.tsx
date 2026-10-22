@@ -305,7 +305,7 @@ describe('Presenter', () => {
     const open = vi.spyOn(window, 'open').mockReturnValue(null)
     fireEvent.click(screen.getByTestId('present-view'))
     expect(open).toHaveBeenCalledTimes(1)
-    expect(String(open.mock.calls[0][0])).toContain('presenter-view.html?session=')
+    expect(String(open.mock.calls[0][0])).toContain('presenter-view?session=')
     expect(screen.getByTestId('present-message')).toHaveTextContent(t.presenter.blockedTitle)
     expect(screen.getByTestId('present-notes')).toBeInTheDocument()
     open.mockReturnValue({ closed: false, focus: vi.fn() } as unknown as Window)

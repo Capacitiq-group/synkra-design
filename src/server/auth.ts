@@ -3,7 +3,7 @@ import { db } from '@/lib/db'
 import {
   HttpError, jsonResponse, readJson, checkCsrf, currentUser, requireUser, createSession,
   sessionCookie, clearSessionCookie, csrfCookie, hashPassword, verifyPassword, randomToken,
-  rateLimit, clientKey, serializeUser, LIMITS,
+  rateLimit, clientKey, serializeUser, LIMITS, isSecureRequest, issueCsrfToken, sessionFromRequest,
 } from './core'
 import { sendEmail, verifyEmailHtml, resetEmailHtml } from './email'
 
@@ -36,9 +36,12 @@ function siteUrl(req: NextRequest): string {
 
 export const authHandlers = {
   async 'GET /auth/csrf'(req: NextRequest): Promise<NextResponse> {
+    const secure = isSecureRequest(req)
     const existing = req.headers.get('cookie')?.match(/csrftoken=([^;]+)/)?.[1]
-    const token = existing ? decodeURIComponent(existing) : randomToken(24)
-    return new NextResponse(null, { status: 204, headers: { 'Set-Cookie': csrfCookie(token), 'Cache-Control': 'no-store' } })
+    // Keep the cookie value stable when present (double-submit), else mint a signed token that
+    // also lands in the JSON body for browsers that block cookies in cross-site iframe previews.
+    const token = existing ? decodeURIComponent(existing) : issueCsrfToken()
+    return jsonResponse({ token }, { headers: { 'Set-Cookie': csrfCookie(token, secure), 'Cache-Control': 'no-store' } })
   },
 
   async 'GET /auth/me'(req: NextRequest): Promise<NextResponse> {
@@ -71,7 +74,7 @@ export const authHandlers = {
     const verifyToken = await issueAuthToken(user.id, 'verify')
     const mail = verifyEmailHtml(`${siteUrl(req)}/verify-email?uid=${user.id}&token=${verifyToken}`)
     void sendEmail({ to: user.email, ...mail, kind: 'verify' })
-    return jsonResponse({ user: serializeUser(user) }, { status: 201, headers: { 'Set-Cookie': sessionCookie(session.id, session.expiresAt) } })
+    return jsonResponse({ user: serializeUser(user), session_token: session.id }, { status: 201, headers: { 'Set-Cookie': sessionCookie(session.id, session.expiresAt, isSecureRequest(req)) } })
   },
 
   async 'POST /auth/login'(req: NextRequest): Promise<NextResponse> {
@@ -96,14 +99,14 @@ export const authHandlers = {
     }
     await db.user.update({ where: { id: user.id }, data: { failedLogins: 0, lockoutUntil: null } })
     const session = await createSession(user.id)
-    return jsonResponse({ user: serializeUser(user) }, { headers: { 'Set-Cookie': sessionCookie(session.id, session.expiresAt) } })
+    return jsonResponse({ user: serializeUser(user), session_token: session.id }, { headers: { 'Set-Cookie': sessionCookie(session.id, session.expiresAt, isSecureRequest(req)) } })
   },
 
   async 'POST /auth/logout'(req: NextRequest): Promise<NextResponse> {
     checkCsrf(req)
-    const sessionId = req.headers.get('cookie')?.match(/synkra_session=([^;]+)/)?.[1]
+    const sessionId = sessionFromRequest(req)
     if (sessionId) await db.session.deleteMany({ where: { id: sessionId } })
-    return new NextResponse(null, { status: 204, headers: { 'Set-Cookie': clearSessionCookie() } })
+    return new NextResponse(null, { status: 204, headers: { 'Set-Cookie': clearSessionCookie(isSecureRequest(req)) } })
   },
 
   async 'PATCH /auth/me'(req: NextRequest): Promise<NextResponse> {
@@ -142,7 +145,7 @@ export const authHandlers = {
     const staffCount = await db.user.count({ where: { isStaff: true } })
     if (user.isStaff && staffCount <= 1) throw new HttpError(400, 'last_staff', 'The last staff account cannot be deleted.')
     await db.user.delete({ where: { id: user.id } })
-    return new NextResponse(null, { status: 204, headers: { 'Set-Cookie': clearSessionCookie() } })
+    return new NextResponse(null, { status: 204, headers: { 'Set-Cookie': clearSessionCookie(isSecureRequest(req)) } })
   },
 
   async 'POST /auth/password/change'(req: NextRequest): Promise<NextResponse> {

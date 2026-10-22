@@ -150,7 +150,8 @@ describe('features, FAQ and contact pages', () => {
     const features = renderApp('/features')
     expect(await screen.findByRole('heading', { level: 1 })).toHaveTextContent('All the tools. None of the paywalls.')
     expect(screen.getByRole('heading', { name: 'Brand kits' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: /Step 3: Save it to an account/ })).toBeInTheDocument()
+    // The 'Step N:' prefix is aria-hidden, so it is not part of the heading's accessible name.
+    expect(screen.getByRole('heading', { name: /Step 3:\s*Save it to an account/ })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Create a design' })).toHaveAttribute('href', '/create')
     features.unmount()
 

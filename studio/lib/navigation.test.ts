@@ -7,14 +7,14 @@ describe('safeNextPath', () => {
   })
 
   it('falls back for empty values', () => {
-    expect(safeNextPath(null)).toBe('/dashboard')
-    expect(safeNextPath('')).toBe('/dashboard')
+    expect(safeNextPath(null)).toBe('/')
+    expect(safeNextPath('')).toBe('/')
     expect(safeNextPath(undefined, '/x')).toBe('/x')
   })
 
   it('blocks open redirects', () => {
     for (const bad of ['//evil.test', 'https://evil.test/a', 'javascript:alert(1)', '/\\evil.test', 'evil.test', '/ok\n//evil.test']) {
-      expect(safeNextPath(bad)).toBe('/dashboard')
+      expect(safeNextPath(bad)).toBe('/')
     }
   })
 })

@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { configureBackgroundRemoval } from '@/editor/engine/bgRemoval/install'
-import { ApiError, authApi, configApi, DEFAULT_CONFIG, isApiError, setUnauthorizedHandler } from '@/lib/api'
+import { ApiError, authApi, configApi, DEFAULT_CONFIG, isApiError, setSessionToken, setUnauthorizedHandler } from '@/lib/api'
 import type { ApiUser, AppConfig, RegisterInput } from '@/types/api'
 
 export type AuthStatus = 'loading' | 'authenticated' | 'anonymous'
@@ -99,6 +99,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   /** The server no longer knows this session. Cached data stays (an open editor still shows its design) until the next sign-in clears it. */
   const loseSession = useCallback(() => {
     const previous = userRef.current
+    setSessionToken(null)
     if (!previous) return
     userRef.current = null
     setLostSession({ id: previous.id, email: previous.email })

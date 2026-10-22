@@ -14,9 +14,10 @@ beforeEach(() => {
 
 describe('the address of a room', () => {
   it('is on this site, secure when the page is, and carries only the design id', () => {
-    expect(realtimeAddress('abc-123', { protocol: 'https:', host: 'synkra.example' })).toBe('wss://synkra.example/ws/designs/abc-123/')
-    expect(realtimeAddress('abc-123', { protocol: 'http:', host: 'localhost:5173' })).toBe('ws://localhost:5173/ws/designs/abc-123/')
-    expect(realtimeAddress('a/../b?x=1', { protocol: 'https:', host: 'h' })).toBe('wss://h/ws/designs/a%2F..%2Fb%3Fx%3D1/')
+    // The sandbox gateway routes other ports via the `XTransformPort` query, so rooms are `?room=`.
+    expect(realtimeAddress('abc-123', { protocol: 'https:', host: 'synkra.example' })).toBe('wss://synkra.example/?XTransformPort=3010&room=designs/abc-123')
+    expect(realtimeAddress('abc-123', { protocol: 'http:', host: 'localhost:5173' })).toBe('ws://localhost:5173/?XTransformPort=3010&room=designs/abc-123')
+    expect(realtimeAddress('a/../b?x=1', { protocol: 'https:', host: 'h' })).toBe('wss://h/?XTransformPort=3010&room=designs/a%2F..%2Fb%3Fx%3D1')
   })
 })
 
@@ -24,7 +25,7 @@ describe('account adapter', () => {
   it('offers a room only when the server has real-time editing', () => {
     expect(createAccountAdapter('d1', () => 1, { config: { features } }).realtime).toBeNull()
     const adapter = createAccountAdapter('d1', () => 1, { config: { features: { ...features, realtime: true } } })
-    expect(adapter.realtime?.url).toMatch(/^wss?:\/\/.+\/ws\/designs\/d1\/$/)
+    expect(adapter.realtime?.url).toMatch(/^wss?:\/\/.+\?XTransformPort=3010&room=designs\/d1$/)
     expect(adapter.realtime?.auth).toBeUndefined()
   })
 
@@ -103,7 +104,7 @@ describe('shared adapter', () => {
   it('joins the design\'s room with the link\'s credentials in the first frame, and cannot rename', async () => {
     const requireSignIn = vi.fn(async () => true)
     const adapter = createSharedAdapter({ ...base, password: 'pw', live: { designId: 'design-9', requireSignIn } })
-    expect(adapter.realtime?.url).toMatch(/\/ws\/designs\/design-9\/$/)
+    expect(adapter.realtime?.url).toMatch(/XTransformPort=3010&room=designs\/design-9$/)
     expect(adapter.realtime?.auth).toEqual({ token: base.token, password: 'pw' })
     expect(adapter.realtime?.setTitle).toBeNull()
     expect(await adapter.realtime?.requireSignIn()).toBe(true)

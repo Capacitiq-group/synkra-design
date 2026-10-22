@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { randomBytes, scryptSync, timingSafeEqual, createHash } from 'crypto'
+import { randomBytes, scryptSync, timingSafeEqual, createHash, createHmac } from 'crypto'
 import { db } from '@/lib/db'
 import type { User } from '@prisma/client'
 
@@ -22,6 +22,8 @@ export const LIMITS = {
 
 export const SESSION_COOKIE = 'synkra_session'
 export const CSRF_COOKIE = 'csrftoken'
+/** Header fallback carrying the session id when cookies are unavailable (embedded previews). */
+export const SESSION_HEADER = 'x-session-token'
 const SESSION_DAYS = 30
 
 export class HttpError extends Error {
@@ -117,16 +119,40 @@ export async function createSession(userId: string): Promise<{ id: string; expir
   return { id, expiresAt }
 }
 
-export function sessionCookie(id: string, expiresAt: Date): string {
-  return `${SESSION_COOKIE}=${id}; Path=/; Expires=${expiresAt.toUTCString()}; HttpOnly; SameSite=Lax`
+/**
+ * Whether auth cookies may use `SameSite=None; Secure` for this request.
+ *
+ * Embedded sandbox previews terminate TLS at the platform gateway and forward plain HTTP
+ * internally, so `x-forwarded-proto` alone cannot be trusted: under `auto`, any non-local
+ * host is treated as HTTPS. `SYNKRA_COOKIE_SECURE=always|never` overrides the behaviour.
+ */
+export function isSecureRequest(req: NextRequest): boolean {
+  const mode = (process.env.SYNKRA_COOKIE_SECURE ?? 'auto').toLowerCase()
+  if (mode === 'always') return true
+  if (mode === 'never') return false
+  const proto = req.headers.get('x-forwarded-proto')?.split(',')[0]?.trim()
+  if (proto === 'https') return true
+  if (proto === 'http') {
+    const forwardedHost = (req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? '').toLowerCase().split(':')[0]
+    return forwardedHost !== '' && forwardedHost !== 'localhost' && forwardedHost !== '127.0.0.1' && forwardedHost !== '0.0.0.0' && !forwardedHost.endsWith('.localhost')
+  }
+  return false
 }
 
-export function clearSessionCookie(): string {
-  return `${SESSION_COOKIE}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax`
+function cookieAttributes(secure: boolean): string {
+  return secure ? 'Secure; SameSite=None' : 'SameSite=Lax'
 }
 
-export function csrfCookie(value: string): string {
-  return `${CSRF_COOKIE}=${value}; Path=/; SameSite=Lax`
+export function sessionCookie(id: string, expiresAt: Date, secure = false): string {
+  return `${SESSION_COOKIE}=${id}; Path=/; Expires=${expiresAt.toUTCString()}; HttpOnly; ${cookieAttributes(secure)}`
+}
+
+export function clearSessionCookie(secure = false): string {
+  return `${SESSION_COOKIE}=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; ${cookieAttributes(secure)}`
+}
+
+export function csrfCookie(value: string, secure = false): string {
+  return `${CSRF_COOKIE}=${value}; Path=/; ${cookieAttributes(secure)}`
 }
 
 function readCookie(req: NextRequest, name: string): string | null {
@@ -139,17 +165,51 @@ function readCookie(req: NextRequest, name: string): string | null {
   return null
 }
 
+// ---------- signed CSRF tokens (cookie-less contexts) ----------
+
+const CSRF_SECRET = process.env.SYNKRA_CSRF_SECRET ?? SERVICE_TOKEN
+
+/**
+ * A signed, stateless CSRF token for contexts where cookies are blocked (cross-site iframe
+ * previews). The token can only be obtained by reading `GET /auth/csrf` same-origin, which
+ * cross-site attackers cannot do, so presenting it in the header remains a CSRF defence.
+ */
+export function issueCsrfToken(): string {
+  const ts = Date.now().toString()
+  const mac = createHmac('sha256', CSRF_SECRET).update(ts).digest('hex')
+  return `v1.${ts}.${mac}`
+}
+
+/** Validates a signed CSRF token (7-day validity window, timing-safe comparison). */
+export function isValidCsrfToken(token: string): boolean {
+  const match = /^v1\.(\d+)\.([0-9a-f]{64})$/.exec(token)
+  if (!match) return false
+  if (Math.abs(Date.now() - Number(match[1])) > 7 * 24 * 60 * 60 * 1000) return false
+  const expected = Buffer.from(createHmac('sha256', CSRF_SECRET).update(match[1]).digest('hex'), 'hex')
+  const got = Buffer.from(match[2], 'hex')
+  return got.length === expected.length && timingSafeEqual(got, expected)
+}
+
 export function checkCsrf(req: NextRequest): void {
   const cookieToken = readCookie(req, CSRF_COOKIE)
   const headerToken = req.headers.get('x-csrftoken')
-  if (!cookieToken || !headerToken || cookieToken !== headerToken) {
-    throw new HttpError(403, 'csrf_failed', 'The request could not be verified. Refresh the page and try again.')
+  if (headerToken) {
+    // Classic double-submit when cookies work…
+    if (cookieToken && cookieToken === headerToken) return
+    // …and a signed token from GET /auth/csrf when the browser blocks them.
+    if (isValidCsrfToken(headerToken)) return
   }
+  throw new HttpError(403, 'csrf_failed', 'The request could not be verified. Refresh the page and try again.')
+}
+
+/** Session id from the session cookie or, when cookies are blocked (embedded previews), the header fallback. */
+export function sessionFromRequest(req: NextRequest): string | null {
+  return readCookie(req, SESSION_COOKIE) ?? req.headers.get(SESSION_HEADER)
 }
 
 /** The signed-in user, or null. Sessions are DB-backed; expired ones are ignored. */
 export async function currentUser(req: NextRequest): Promise<User | null> {
-  const sessionId = readCookie(req, SESSION_COOKIE)
+  const sessionId = sessionFromRequest(req)
   if (!sessionId) return null
   const session = await db.session.findUnique({ where: { id: sessionId }, include: { user: true } })
   if (!session) return null

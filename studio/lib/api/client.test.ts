@@ -1,6 +1,6 @@
 import { http as mswHttp, HttpResponse } from 'msw'
 import { server } from '@/test/msw'
-import { ApiError, buildQuery, ensureCsrf, http, resetClientState, setUnauthorizedHandler } from './client'
+import { ApiError, buildQuery, ensureCsrf, http, resetClientState, setSessionToken, setUnauthorizedHandler } from './client'
 
 function clearCookie() {
   document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/'
@@ -123,6 +123,59 @@ describe('http client: CSRF', () => {
     )
     await expect(http.post('/auth/logout/')).resolves.toBeUndefined()
     expect(used).toEqual(['stale', 'renewed'])
+  })
+
+  it('uses the JSON token when the browser blocks cookies entirely', async () => {
+    let csrfCalls = 0
+    const used: Array<string | null> = []
+    server.use(
+      mswHttp.get('*/api/v1/auth/csrf/', () => {
+        csrfCalls += 1
+        // No Set-Cookie on purpose: this is the third-party-cookie-blocked preview scenario.
+        return HttpResponse.json({ token: 'signed-v1-token' })
+      }),
+      mswHttp.post('*/api/v1/auth/login/', ({ request }) => {
+        used.push(request.headers.get('x-csrftoken'))
+        return HttpResponse.json({ user: { id: 'u1' } })
+      }),
+    )
+    await http.post('/auth/login/', { json: { email: 'a@b.dev', password: 'x' } })
+    await http.post('/auth/login/', { json: { email: 'a@b.dev', password: 'x' } })
+    expect(csrfCalls).toBe(1)
+    expect(used).toEqual(['signed-v1-token', 'signed-v1-token'])
+  })
+
+  it('retries with a freshly fetched token on csrf_failed even without cookies', async () => {
+    const used: Array<string | null> = []
+    server.use(
+      mswHttp.get('*/api/v1/auth/csrf/', () => HttpResponse.json({ token: 'fresh-signed' })),
+      mswHttp.post('*/api/v1/auth/register/', ({ request }) => {
+        used.push(request.headers.get('x-csrftoken'))
+        if (used.length === 1) return HttpResponse.json({ error: { code: 'csrf_failed', message: 'The request could not be verified. Refresh the page and try again.' } }, { status: 403 })
+        return HttpResponse.json({ user: { id: 'u1' } }, { status: 201 })
+      }),
+    )
+    await expect(http.post('/auth/register/', { json: {} })).resolves.toEqual({ user: { id: 'u1' } })
+    expect(used).toEqual(['fresh-signed', 'fresh-signed'])
+  })
+
+  it('sends the stored session token as X-Session-Token on every request', async () => {
+    setSessionToken('sess-token-123')
+    const seen: Array<string | null> = []
+    server.use(
+      mswHttp.get('*/api/v1/auth/me/', ({ request }) => {
+        seen.push(request.headers.get('x-session-token'))
+        return HttpResponse.json({ user: null })
+      }),
+      mswHttp.post('*/api/v1/designs/', ({ request }) => {
+        seen.push(request.headers.get('x-session-token'))
+        return HttpResponse.json({ id: 'd1' }, { status: 201 })
+      }),
+    )
+    document.cookie = 'csrftoken=tok; path=/'
+    await http.get('/auth/me/')
+    await http.post('/designs/', { json: {} })
+    expect(seen).toEqual(['sess-token-123', 'sess-token-123'])
   })
 })
 

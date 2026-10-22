@@ -54,7 +54,7 @@ describe('settings: AI providers', () => {
       config: config('staff'),
       handlers: [http.get('*/api/v1/ai/providers/', () => HttpResponse.json({ error: { code: 'ai_user_providers_disabled', message: 'Not enabled.' } }, { status: 403 }))],
     })
-    expect(await screen.findByRole('heading', { name: 'AI providers' })).toBeInTheDocument()
+    // The 403 can land before the first paint of the section, so only the end state is asserted.
     await waitFor(() => expect(screen.queryByRole('heading', { name: 'AI providers' })).toBeNull())
   })
 

@@ -76,7 +76,8 @@ describe('font picker with uploaded fonts', () => {
 
     const mine = await screen.findByRole('option', { name: 'Brand Sans' })
     expect(mine).toHaveAttribute('data-group', 'mine')
-    const rows = screen.getAllByRole('option')
+    // Scope to the listbox: the script <select> above it also exposes role="option" entries.
+    const rows = within(screen.getByRole('listbox')).getAllByRole('option')
     expect(rows[0]).toHaveTextContent('Brand Sans')
     expect(rows[1]).toHaveTextContent('Zine Serif')
     expect(screen.getByText(t.userFonts.group)).toBeInTheDocument()

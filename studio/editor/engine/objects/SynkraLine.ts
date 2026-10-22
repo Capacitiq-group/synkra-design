@@ -15,7 +15,11 @@ export function arrowHeadSize(strokeWidth: number): number {
 }
 
 export class SynkraLine extends FabricObject {
-  static override type = 'SynkraLine'
+  /**
+   * The document-format name stays `DoryLine` from before the rebrand: saved documents and the
+   * backend builders exchange this type string, and renaming it would orphan existing designs.
+   */
+  static override type = 'DoryLine'
 
   declare arrowStart: ArrowHead
   declare arrowEnd: ArrowHead

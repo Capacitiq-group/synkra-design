@@ -29,9 +29,10 @@ describe('uuid', () => {
   })
 })
 
-/** `crypto.randomUUID` is missing on plain-http pages: every caller must go through `uuid()`. */
+/** `crypto.randomUUID` is missing on plain-http pages: every browser caller must go through `uuid()`. */
 describe('no direct crypto.randomUUID', () => {
-  const root = join(process.cwd(), 'src')
+  // Only browser code is walked: the server (`src/`) runs on Node, which always has randomUUID.
+  const root = join(process.cwd(), 'studio')
   const skip = new Set([join(root, 'lib', 'uuid.ts'), join(root, 'lib', 'uuid.test.ts'), join(root, 'editor', 'collab', 'fuzz', 'ops.ts')])
   function* files(dir: string): Generator<string> {
     for (const name of readdirSync(dir)) {

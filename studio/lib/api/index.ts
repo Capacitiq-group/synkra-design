@@ -1,4 +1,4 @@
-export { ApiError, buildQuery, ensureCsrf, http, isApiError, resetClientState, setUnauthorizedHandler } from './client'
+export { ApiError, buildQuery, ensureCsrf, http, isApiError, resetClientState, setUnauthorizedHandler, setSessionToken, getSessionToken, clearAuthTokens } from './client'
 export type { RequestOptions } from './client'
 export { aiApi } from './ai'
 export { assetsApi } from './assets'

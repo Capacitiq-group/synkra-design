@@ -32,7 +32,13 @@ def collect_urls():
         raw = json.load(open(URLS_CACHE))
         return {tuple(k.split('|')): tuple(v) for k, v in raw.items()}
     seen = {}  # (a,b,c) -> (category, slug, ext)
+    if os.path.exists(URLS_CACHE + '.partial'):
+        raw = json.load(open(URLS_CACHE + '.partial'))
+        seen = {tuple(k.split('|')): tuple(v) for k, v in raw.items()}
     for cat in CATEGORIES:
+        if any(v[0] == cat for v in seen.values()):
+            print(f'{cat}: cached', flush=True)
+            continue
         got_before = len(seen)
         for page in range(1, PAGES_PER_CATEGORY + 1):
             url = f'https://www.vecteezy.com/free-vector/{cat}' + (f'?page={page}' if page > 1 else '')
@@ -52,6 +58,7 @@ def collect_urls():
             if found == 0:
                 break  # no more results on later pages
         print(f'{cat}: +{len(seen)-got_before}', flush=True)
+        json.dump({f'{k[0]}|{k[1]}|{k[2]}': list(v) for k, v in seen.items()}, open(URLS_CACHE + '.partial', 'w'))
     json.dump({f'{k[0]}|{k[1]}|{k[2]}': list(v) for k, v in seen.items()}, open(URLS_CACHE, 'w'))
     return seen
 
@@ -79,13 +86,15 @@ def main():
     print(f'total unique previews: {len(seen)}')
     stats = {'ok': 0, 'skip': 0, 'fail': 0}
     failures = []
+    items = list(seen.items())
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKERS) as ex:
-        for i, (status, fname) in enumerate(ex.map(download, seen.items()), 1):
+        for i, (status, fname) in enumerate(ex.map(download, items), 1):
             stats[status] += 1
             if status == 'fail':
                 failures.append(fname)
             if i % 100 == 0:
-                print(f'  {i}/{len(seen)} ok={stats["ok"]} skip={stats["skip"]} fail={stats["fail"]}')
+                print(f'  {i}/{len(items)} ok={stats["ok"]} skip={stats["skip"]} fail={stats["fail"]}', flush=True)
+                json.dump({f'{k[0]}|{k[1]}|{k[2]}': list(v) for k, v in seen.items()}, open(URLS_CACHE + '.partial', 'w'))
     print(f'download done: {stats}')
 
     # rebuild manifest from successfully downloaded files

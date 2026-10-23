@@ -167,8 +167,9 @@ const MAX_FAMILIES = 120
 
 async function seedFonts(): Promise<void> {
   const installedStatic = existsSync(path.join(PACKS, '@fontsource')) ? readdirSync(path.join(PACKS, '@fontsource')).sort() : []
+  const installedVariable = existsSync(path.join(PACKS, '@fontsource-variable')) ? readdirSync(path.join(PACKS, '@fontsource-variable')).sort() : []
   const wanted = SEED_ALL_FONTS
-    ? [...new Set([...installedStatic, ...TEMPLATE_FONTS])]
+    ? [...new Set([...installedStatic, ...installedVariable, ...TEMPLATE_FONTS])]
     : [...new Set([...FONT_POPULAR.slice(0, MAX_FAMILIES - TEMPLATE_FONTS.length).map((f) => f.id), ...TEMPLATE_FONTS])]
   let families = 0
   let variants = 0
@@ -204,18 +205,49 @@ async function seedFonts(): Promise<void> {
       continue
     }
     const unicode = JSON.parse(readFileSync(path.join(fileDir, 'unicode.json'), 'utf8')) as Record<string, string>
-    const installable = subsets.filter((subset) => !CJK_PREFIXES.some((prefix) => subset.startsWith(prefix)))
+    // Latin coverage is what the editor needs; shipping every subset of every family
+    // would balloon the media tree (CJK alone is ~10x latin). Full metadata (scripts,
+    // subsets) stays in the family row, so the UI can still describe the font.
+    const WANTED_SUBSETS = new Set(['latin', 'latin-ext', 'emoji'])
+    let installable = subsets.filter((subset) => WANTED_SUBSETS.has(subset))
+    if (installable.length === 0) {
+      // Script-specific fonts (Lycian, Khmer, Lao, Myanmar…) ship no latin subset —
+      // fall back to their native non-CJK subsets so the family is still usable.
+      installable = subsets.filter((subset) => !CJK_PREFIXES.some((prefix) => subset.startsWith(prefix))).slice(0, 2)
+    }
     const outDir = path.join(MEDIA, 'fonts/system', slug)
     const rows: { weight: number; style: string; subset: string; unicodeRange: string; filePath: string; format: string; size: number }[] = []
     if (isVariable) {
       for (const subset of installable) {
-        const file = `${subset}-wght-normal.woff2`
+        // Fontsource variable files are slug-prefixed: e.g. outfit-latin-wght-normal.woff2.
+        // Some variable packages ship extra named-axis files (ctrs, opsz…); prefer wght.
+        const file = `${slug}-${subset}-wght-normal.woff2`
         const source = path.join(fileDir, 'files', file)
-        if (!existsSync(source)) continue
+        if (!existsSync(source)) {
+          const fallback = `${subset}-wght-normal.woff2`
+          const fallbackPath = path.join(fileDir, 'files', fallback)
+          if (!existsSync(fallbackPath)) continue
+          const target = path.join(outDir, fallback)
+          mkdirSync(outDir, { recursive: true })
+          if (!existsSync(target)) copyFileSync(fallbackPath, target)
+          rows.push({ weight: 400, style: 'normal', subset, unicodeRange: unicode[subset] ?? '', filePath: `fonts/system/${slug}/${fallback}`, format: 'woff2', size: statSync(target).size })
+          continue
+        }
         mkdirSync(outDir, { recursive: true })
         const target = path.join(outDir, file)
         if (!existsSync(target)) copyFileSync(source, target)
         rows.push({ weight: 400, style: 'normal', subset, unicodeRange: unicode[subset] ?? '', filePath: `fonts/system/${slug}/${file}`, format: 'woff2', size: statSync(target).size })
+      }
+      if (rows.length === 0) {
+        // A few variable families (Playwrite…) ship only a 'fallback'-named file.
+        const filesDir = path.join(fileDir, 'files')
+        const any = readdirSync(filesDir).find((f) => f.startsWith(`${slug}-`) && f.endsWith('-wght-normal.woff2'))
+        if (any) {
+          const target = path.join(outDir, any)
+          mkdirSync(outDir, { recursive: true })
+          if (!existsSync(target)) copyFileSync(path.join(filesDir, any), target)
+          rows.push({ weight: 400, style: 'normal', subset: 'latin', unicodeRange: unicode.latin ?? '', filePath: `fonts/system/${slug}/${any}`, format: 'woff2', size: statSync(target).size })
+        }
       }
     } else {
       for (const weight of weights) {
@@ -365,14 +397,24 @@ async function seedElements(): Promise<void> {
     if (pack.source.type === 'generated') {
       const setDir = path.join(GENERATED, pack.source.set ?? pack.id)
       if (!existsSync(setDir)) continue
-      for (const folder of readdirSync(setDir)) {
-        const folderPath = path.join(setDir, folder)
-        if (!statSync(folderPath).isDirectory()) continue
-        for (const file of readdirSync(folderPath).filter((f) => f.endsWith('.svg'))) {
-          const svg = readFileSync(path.join(folderPath, file), 'utf8')
-          collected.push({ key: file.replace(/\.svg$/, ''), name: file.replace(/\.svg$/, '').replace(/[-_]+/g, ' '), svg, tags: [...nameToTags(file), folder.replace(/[-_]+/g, ' ')] })
+      // Walk the set tree to any depth (alphabet sets nest style/ <case>/ <char>.svg).
+      const usedKeys = new Set<string>()
+      const walk = (dir: string, scope: string[]): void => {
+        for (const entry of readdirSync(dir)) {
+          const entryPath = path.join(dir, entry)
+          if (statSync(entryPath).isDirectory()) {
+            walk(entryPath, [...scope, entry.replace(/[-_]+/g, ' ')])
+            continue
+          }
+          if (!entry.endsWith('.svg')) continue
+          const svg = readFileSync(entryPath, 'utf8')
+          let key = entry.replace(/\.svg$/, '')
+          if (usedKeys.has(key)) key = [...scope, key].join('-')
+          usedKeys.add(key)
+          collected.push({ key, name: key.replace(/[-_]+/g, ' '), svg, tags: [...nameToTags(entry), ...scope] })
         }
       }
+      walk(setDir, [])
     } else if (pack.source.type === 'npm') {
       const packageName = pack.source.package ?? ''
       const baseDir = path.join(PACKS, packageName)

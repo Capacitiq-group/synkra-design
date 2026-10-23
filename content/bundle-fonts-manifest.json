@@ -1,8 +1,8 @@
 [
  {
-  "slug": "anak-baik-1",
+  "slug": "anak-baik",
   "family": "Anak Baik",
-  "file": "fonts/bundle/anak-baik/anak baik.otf",
+  "file": "fonts/bundle/anak-baik/Anak Baik.otf",
   "format": "otf",
   "bytes": 44036,
   "weight": 400,
@@ -11,9 +11,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-baik-2",
+  "slug": "anak-baik",
   "family": "Anak Baik",
-  "file": "fonts/bundle/anak-baik/anak baik.ttf",
+  "file": "fonts/bundle/anak-baik/Anak Baik.ttf",
   "format": "ttf",
   "bytes": 62744,
   "weight": 400,
@@ -22,20 +22,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-bijak-1",
+  "slug": "anak-bijak",
   "family": "Anak Bijak",
-  "file": "fonts/bundle/anak-bijak/anak bijak.ttf",
-  "format": "ttf",
-  "bytes": 107276,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "anak-bijak-2",
-  "family": "Anak Bijak",
-  "file": "fonts/bundle/anak-bijak/anak bijak.otf",
+  "file": "fonts/bundle/anak-bijak/Anak Bijak.otf",
   "format": "otf",
   "bytes": 70568,
   "weight": 400,
@@ -44,20 +33,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-cakep-1",
-  "family": "Anak Cakep",
-  "file": "fonts/bundle/anak-cakep/anak cakep.ttf",
+  "slug": "anak-bijak",
+  "family": "Anak Bijak",
+  "file": "fonts/bundle/anak-bijak/Anak Bijak.ttf",
   "format": "ttf",
-  "bytes": 63576,
+  "bytes": 107276,
   "weight": 400,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-cakep-2",
+  "slug": "anak-cakep",
   "family": "Anak Cakep",
-  "file": "fonts/bundle/anak-cakep/anak cakep.otf",
+  "file": "fonts/bundle/anak-cakep/Anak Cakep.otf",
   "format": "otf",
   "bytes": 33484,
   "weight": 400,
@@ -66,9 +55,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-manja-1",
+  "slug": "anak-cakep",
+  "family": "Anak Cakep",
+  "file": "fonts/bundle/anak-cakep/Anak Cakep.ttf",
+  "format": "ttf",
+  "bytes": 63576,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "anak-manja",
   "family": "Anak Manja",
-  "file": "fonts/bundle/anak-manja/anak manja.otf",
+  "file": "fonts/bundle/anak-manja/Anak Manja.otf",
   "format": "otf",
   "bytes": 81600,
   "weight": 400,
@@ -77,9 +77,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "anak-manja-2",
+  "slug": "anak-manja",
   "family": "Anak Manja",
-  "file": "fonts/bundle/anak-manja/anak manja.ttf",
+  "file": "fonts/bundle/anak-manja/Anak Manja.ttf",
   "format": "ttf",
   "bytes": 137172,
   "weight": 400,
@@ -88,9 +88,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "aromia-script-1",
-  "family": "AromiaScript-Black_DONATIONWARE",
-  "file": "fonts/bundle/aromia-script/aromiascript-black_donationware.otf",
+  "slug": "aromia-script",
+  "family": "Aromia Script",
+  "file": "fonts/bundle/aromia-script/AromiaScript-Black_DONATIONWARE.otf",
   "format": "otf",
   "bytes": 65820,
   "weight": 400,
@@ -99,31 +99,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "aromia-script-2",
-  "family": "AromiaScript-Black_DONATIONWARE",
-  "file": "fonts/bundle/aromia-script/aromiascript-medium_donationware.otf",
-  "format": "otf",
-  "bytes": 61068,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "aromia-script-3",
-  "family": "AromiaScript-Black_DONATIONWARE",
-  "file": "fonts/bundle/aromia-script/aromiascript-thin_donationware.otf",
-  "format": "otf",
-  "bytes": 61188,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "aromia-script-4",
-  "family": "AromiaScript-Black_DONATIONWARE",
-  "file": "fonts/bundle/aromia-script/aromiascript-bold_donationware.otf",
+  "slug": "aromia-script",
+  "family": "Aromia Script",
+  "file": "fonts/bundle/aromia-script/AromiaScript-Bold_DONATIONWARE.otf",
   "format": "otf",
   "bytes": 63248,
   "weight": 400,
@@ -132,20 +110,42 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "asterisk-mono-1",
-  "family": "AsteriskMono-Regular",
-  "file": "fonts/bundle/asterisk-mono/asteriskmono-regular.ttf",
-  "format": "ttf",
-  "bytes": 51576,
+  "slug": "aromia-script",
+  "family": "Aromia Script",
+  "file": "fonts/bundle/aromia-script/AromiaScript-Medium_DONATIONWARE.otf",
+  "format": "otf",
+  "bytes": 61068,
   "weight": 400,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "asterisk-mono-2",
-  "family": "AsteriskMono-Regular",
-  "file": "fonts/bundle/asterisk-mono/asteriskmono-italic.ttf",
+  "slug": "aromia-script",
+  "family": "Aromia Script",
+  "file": "fonts/bundle/aromia-script/AromiaScript-Thin_DONATIONWARE.otf",
+  "format": "otf",
+  "bytes": 61188,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "asterisk-mono",
+  "family": "Asterisk Mono",
+  "file": "fonts/bundle/asterisk-mono/AsteriskMono-Italic.otf",
+  "format": "otf",
+  "bytes": 54432,
+  "weight": 400,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "asterisk-mono",
+  "family": "Asterisk Mono",
+  "file": "fonts/bundle/asterisk-mono/AsteriskMono-Italic.ttf",
   "format": "ttf",
   "bytes": 54432,
   "weight": 400,
@@ -154,9 +154,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "asterisk-mono-3",
-  "family": "AsteriskMono-Regular",
-  "file": "fonts/bundle/asterisk-mono/asteriskmono-regular.otf",
+  "slug": "asterisk-mono",
+  "family": "Asterisk Mono",
+  "file": "fonts/bundle/asterisk-mono/AsteriskMono-Regular.otf",
   "format": "otf",
   "bytes": 51576,
   "weight": 400,
@@ -165,20 +165,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "asterisk-mono-4",
-  "family": "AsteriskMono-Regular",
-  "file": "fonts/bundle/asterisk-mono/asteriskmono-italic.otf",
-  "format": "otf",
-  "bytes": 54432,
+  "slug": "asterisk-mono",
+  "family": "Asterisk Mono",
+  "file": "fonts/bundle/asterisk-mono/AsteriskMono-Regular.ttf",
+  "format": "ttf",
+  "bytes": 51576,
   "weight": 400,
-  "style": "italic",
+  "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
   "slug": "atavian",
-  "family": "Atavian-REGULAR",
-  "file": "fonts/bundle/atavian/regular.otf",
+  "family": "Atavian",
+  "file": "fonts/bundle/atavian/Atavian-REGULAR.otf",
   "format": "otf",
   "bytes": 50096,
   "weight": 400,
@@ -187,9 +187,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "bakula-1",
-  "family": "Bakula-OTF",
-  "file": "fonts/bundle/bakula/bakula-otf.otf",
+  "slug": "bakula",
+  "family": "Bakula",
+  "file": "fonts/bundle/bakula/Bakula-OTF.otf",
   "format": "otf",
   "bytes": 36992,
   "weight": 400,
@@ -198,9 +198,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "bakula-2",
-  "family": "Bakula-OTF",
-  "file": "fonts/bundle/bakula/bakula-ttf.ttf",
+  "slug": "bakula",
+  "family": "Bakula",
+  "file": "fonts/bundle/bakula/Bakula-TTF.ttf",
   "format": "ttf",
   "bytes": 61840,
   "weight": 400,
@@ -209,9 +209,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "brafesuit-1",
+  "slug": "brafesuit",
   "family": "Brafesuit",
-  "file": "fonts/bundle/brafesuit/brafesuit.otf",
+  "file": "fonts/bundle/brafesuit/Brafesuit.otf",
   "format": "otf",
   "bytes": 2065148,
   "weight": 400,
@@ -220,9 +220,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "brafesuit-2",
+  "slug": "brafesuit",
   "family": "Brafesuit",
-  "file": "fonts/bundle/brafesuit/brafesuit.ttf",
+  "file": "fonts/bundle/brafesuit/Brafesuit.ttf",
   "format": "ttf",
   "bytes": 311756,
   "weight": 400,
@@ -232,8 +232,8 @@
  },
  {
   "slug": "charles-wright-singapore",
-  "family": "CharlesWrightSingapore",
-  "file": "fonts/bundle/charles-wright-singapore/regular.otf",
+  "family": "Charles Wright Singapore",
+  "file": "fonts/bundle/charles-wright-singapore/CharlesWrightSingapore.otf",
   "format": "otf",
   "bytes": 8988,
   "weight": 400,
@@ -244,7 +244,7 @@
  {
   "slug": "civil-manuscript",
   "family": "Civil Manuscript",
-  "file": "fonts/bundle/civil-manuscript/regular.ttf",
+  "file": "fonts/bundle/civil-manuscript/Civil Manuscript.ttf",
   "format": "ttf",
   "bytes": 77648,
   "weight": 400,
@@ -253,9 +253,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "cofenauts-1",
+  "slug": "cofenauts",
   "family": "Cofenauts",
-  "file": "fonts/bundle/cofenauts/cofenauts.otf",
+  "file": "fonts/bundle/cofenauts/Cofenauts.otf",
   "format": "otf",
   "bytes": 244256,
   "weight": 400,
@@ -264,9 +264,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "cofenauts-2",
+  "slug": "cofenauts",
   "family": "Cofenauts",
-  "file": "fonts/bundle/cofenauts/cofenauts.ttf",
+  "file": "fonts/bundle/cofenauts/Cofenauts.ttf",
   "format": "ttf",
   "bytes": 81896,
   "weight": 400,
@@ -277,7 +277,7 @@
  {
   "slug": "conico",
   "family": "CONICO",
-  "file": "fonts/bundle/conico/regular.ttf",
+  "file": "fonts/bundle/conico/CONICO.ttf",
   "format": "ttf",
   "bytes": 14596,
   "weight": 400,
@@ -288,7 +288,7 @@
  {
   "slug": "craze-retro",
   "family": "Craze Retro",
-  "file": "fonts/bundle/craze-retro/regular.ttf",
+  "file": "fonts/bundle/craze-retro/Craze Retro.ttf",
   "format": "ttf",
   "bytes": 22596,
   "weight": 400,
@@ -299,7 +299,7 @@
  {
   "slug": "desert-secrets",
   "family": "Desert Secrets",
-  "file": "fonts/bundle/desert-secrets/regular.otf",
+  "file": "fonts/bundle/desert-secrets/Desert Secrets.otf",
   "format": "otf",
   "bytes": 56488,
   "weight": 400,
@@ -308,9 +308,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "elaesy-1",
-  "family": "Elaesy-OTF",
-  "file": "fonts/bundle/elaesy/elaesy-otf.otf",
+  "slug": "elaesy",
+  "family": "Elaesy",
+  "file": "fonts/bundle/elaesy/Elaesy-OTF.otf",
   "format": "otf",
   "bytes": 38956,
   "weight": 400,
@@ -319,9 +319,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "elaesy-2",
-  "family": "Elaesy-OTF",
-  "file": "fonts/bundle/elaesy/elaesy-ttf.ttf",
+  "slug": "elaesy",
+  "family": "Elaesy",
+  "file": "fonts/bundle/elaesy/Elaesy-TTF.ttf",
   "format": "ttf",
   "bytes": 66472,
   "weight": 400,
@@ -330,9 +330,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "evas-signatures-1",
+  "slug": "evas-signatures",
   "family": "Evas Signatures",
-  "file": "fonts/bundle/evas-signatures/evas signatures.otf",
+  "file": "fonts/bundle/evas-signatures/Evas Signatures.otf",
   "format": "otf",
   "bytes": 138668,
   "weight": 400,
@@ -341,9 +341,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "evas-signatures-2",
+  "slug": "evas-signatures",
   "family": "Evas Signatures",
-  "file": "fonts/bundle/evas-signatures/evas signatures.ttf",
+  "file": "fonts/bundle/evas-signatures/Evas Signatures.ttf",
   "format": "ttf",
   "bytes": 37092,
   "weight": 400,
@@ -352,9 +352,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "holly-berry-pop-1",
+  "slug": "holly-berry-pop",
   "family": "Holly Berry Pop",
-  "file": "fonts/bundle/holly-berry-pop/holly berry pop.otf",
+  "file": "fonts/bundle/holly-berry-pop/Holly Berry Pop.otf",
   "format": "otf",
   "bytes": 28220,
   "weight": 400,
@@ -363,9 +363,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "holly-berry-pop-2",
+  "slug": "holly-berry-pop",
   "family": "Holly Berry Pop",
-  "file": "fonts/bundle/holly-berry-pop/holly berry pop.ttf",
+  "file": "fonts/bundle/holly-berry-pop/Holly Berry Pop.ttf",
   "format": "ttf",
   "bytes": 46508,
   "weight": 400,
@@ -374,31 +374,31 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "honfleur-1",
-  "family": "Honfleur-HeavyItalic",
-  "file": "fonts/bundle/honfleur/honfleur-heavyitalic.otf",
+  "slug": "honfleur",
+  "family": "Honfleur",
+  "file": "fonts/bundle/honfleur/Honfleur-Heavy.otf",
   "format": "otf",
-  "bytes": 47376,
-  "weight": 400,
-  "style": "italic",
+  "bytes": 46784,
+  "weight": 900,
+  "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "honfleur-2",
-  "family": "Honfleur-HeavyItalic",
-  "file": "fonts/bundle/honfleur/honfleur-heavy.otf",
+  "slug": "honfleur",
+  "family": "Honfleur",
+  "file": "fonts/bundle/honfleur/Honfleur-HeavyItalic.otf",
   "format": "otf",
-  "bytes": 46784,
-  "weight": 400,
-  "style": "normal",
+  "bytes": 47376,
+  "weight": 900,
+  "style": "italic",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
   "slug": "jastyka",
   "family": "Jastyka",
-  "file": "fonts/bundle/jastyka/regular.ttf",
+  "file": "fonts/bundle/jastyka/Jastyka.ttf",
   "format": "ttf",
   "bytes": 73316,
   "weight": 400,
@@ -407,9 +407,53 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "juliett-1",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-italic.otf",
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Bold.otf",
+  "format": "otf",
+  "bytes": 72304,
+  "weight": 700,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Bold.ttf",
+  "format": "ttf",
+  "bytes": 72304,
+  "weight": 700,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-BoldItalic.otf",
+  "format": "otf",
+  "bytes": 77496,
+  "weight": 700,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-BoldItalic.ttf",
+  "format": "ttf",
+  "bytes": 77496,
+  "weight": 700,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Italic.otf",
   "format": "otf",
   "bytes": 78508,
   "weight": 400,
@@ -418,20 +462,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "juliett-2",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-regular.otf",
-  "format": "otf",
-  "bytes": 73852,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "juliett-3",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-italic.ttf",
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Italic.ttf",
   "format": "ttf",
   "bytes": 78508,
   "weight": 400,
@@ -440,21 +473,10 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "juliett-4",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-bold.ttf",
-  "format": "ttf",
-  "bytes": 72304,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "juliett-5",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-regular.ttf",
-  "format": "ttf",
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Regular.otf",
+  "format": "otf",
   "bytes": 73852,
   "weight": 400,
   "style": "normal",
@@ -462,33 +484,11 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "juliett-6",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-bolditalic.ttf",
+  "slug": "juliett",
+  "family": "Juliett",
+  "file": "fonts/bundle/juliett/Juliett-Regular.ttf",
   "format": "ttf",
-  "bytes": 77496,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "juliett-7",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-bolditalic.otf",
-  "format": "otf",
-  "bytes": 77496,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "juliett-8",
-  "family": "Juliett-Italic",
-  "file": "fonts/bundle/juliett/juliett-bold.otf",
-  "format": "otf",
-  "bytes": 72304,
+  "bytes": 73852,
   "weight": 400,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
@@ -497,7 +497,7 @@
  {
   "slug": "kunstraub",
   "family": "Kunstraub",
-  "file": "fonts/bundle/kunstraub/regular.ttf",
+  "file": "fonts/bundle/kunstraub/Kunstraub.ttf",
   "format": "ttf",
   "bytes": 31080,
   "weight": 400,
@@ -506,9 +506,53 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "lumierepolis-1",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-italic.otf",
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Bold.otf",
+  "format": "otf",
+  "bytes": 23600,
+  "weight": 700,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Bold.ttf",
+  "format": "ttf",
+  "bytes": 23600,
+  "weight": 700,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-BoldItalic.otf",
+  "format": "otf",
+  "bytes": 26012,
+  "weight": 700,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-BoldItalic.ttf",
+  "format": "ttf",
+  "bytes": 26012,
+  "weight": 700,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Italic.otf",
   "format": "otf",
   "bytes": 25916,
   "weight": 400,
@@ -517,31 +561,64 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "lumierepolis-2",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-lightitalic.otf",
-  "format": "otf",
-  "bytes": 25776,
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Italic.ttf",
+  "format": "ttf",
+  "bytes": 25916,
   "weight": 400,
   "style": "italic",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "lumierepolis-3",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-light.otf",
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Light.otf",
   "format": "otf",
   "bytes": 23436,
-  "weight": 400,
+  "weight": 300,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "lumierepolis-4",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-regular.otf",
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Light.ttf",
+  "format": "ttf",
+  "bytes": 23436,
+  "weight": 300,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-LightItalic.otf",
+  "format": "otf",
+  "bytes": 25776,
+  "weight": 300,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-LightItalic.ttf",
+  "format": "ttf",
+  "bytes": 25776,
+  "weight": 300,
+  "style": "italic",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Regular.otf",
   "format": "otf",
   "bytes": 23300,
   "weight": 400,
@@ -550,86 +627,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "lumierepolis-5",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-italic.ttf",
-  "format": "ttf",
-  "bytes": 25916,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-6",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-light.ttf",
-  "format": "ttf",
-  "bytes": 23436,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-7",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-bold.ttf",
-  "format": "ttf",
-  "bytes": 23600,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-8",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-lightitalic.ttf",
-  "format": "ttf",
-  "bytes": 25776,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-9",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-bold.otf",
-  "format": "otf",
-  "bytes": 23600,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-10",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-bolditalic.ttf",
-  "format": "ttf",
-  "bytes": 26012,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-11",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-bolditalic.otf",
-  "format": "otf",
-  "bytes": 26012,
-  "weight": 400,
-  "style": "italic",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "lumierepolis-12",
-  "family": "Lumierepolis-Italic",
-  "file": "fonts/bundle/lumierepolis/lumierepolis-regular.ttf",
+  "slug": "lumierepolis",
+  "family": "Lumierepolis",
+  "file": "fonts/bundle/lumierepolis/Lumierepolis-Regular.ttf",
   "format": "ttf",
   "bytes": 23300,
   "weight": 400,
@@ -640,7 +640,7 @@
  {
   "slug": "malvides",
   "family": "Malvides",
-  "file": "fonts/bundle/malvides/regular.otf",
+  "file": "fonts/bundle/malvides/Malvides.otf",
   "format": "otf",
   "bytes": 17520,
   "weight": 400,
@@ -649,10 +649,10 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "mayur-1",
-  "family": "Mayur-Regular",
-  "file": "fonts/bundle/mayur/mayur-regular.ttf",
-  "format": "ttf",
+  "slug": "mayur",
+  "family": "Mayur",
+  "file": "fonts/bundle/mayur/Mayur-Regular.otf",
+  "format": "otf",
   "bytes": 17736,
   "weight": 400,
   "style": "normal",
@@ -660,10 +660,10 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "mayur-2",
-  "family": "Mayur-Regular",
-  "file": "fonts/bundle/mayur/mayur-regular.otf",
-  "format": "otf",
+  "slug": "mayur",
+  "family": "Mayur",
+  "file": "fonts/bundle/mayur/Mayur-Regular.ttf",
+  "format": "ttf",
   "bytes": 17736,
   "weight": 400,
   "style": "normal",
@@ -673,7 +673,7 @@
  {
   "slug": "melted-plasma",
   "family": "Melted Plasma",
-  "file": "fonts/bundle/melted-plasma/regular.otf",
+  "file": "fonts/bundle/melted-plasma/Melted Plasma.otf",
   "format": "otf",
   "bytes": 66396,
   "weight": 400,
@@ -682,20 +682,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "mister-brush-1",
-  "family": "MisterBrush",
-  "file": "fonts/bundle/mister-brush/misterbrush.ttf",
-  "format": "ttf",
-  "bytes": 746240,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "mister-brush-2",
-  "family": "MisterBrush",
-  "file": "fonts/bundle/mister-brush/misterbrush.otf",
+  "slug": "mister-brush",
+  "family": "Mister Brush",
+  "file": "fonts/bundle/mister-brush/MisterBrush.otf",
   "format": "otf",
   "bytes": 746240,
   "weight": 400,
@@ -704,9 +693,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "nostalgia-script-1",
-  "family": "NostalgiaScript-Regular",
-  "file": "fonts/bundle/nostalgia-script/nostalgiascript-regular.otf",
+  "slug": "mister-brush",
+  "family": "Mister Brush",
+  "file": "fonts/bundle/mister-brush/MisterBrush.ttf",
+  "format": "ttf",
+  "bytes": 746240,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "nostalgia-script",
+  "family": "Nostalgia Script",
+  "file": "fonts/bundle/nostalgia-script/NostalgiaScript-Regular.otf",
   "format": "otf",
   "bytes": 98944,
   "weight": 400,
@@ -715,9 +715,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "nostalgia-script-2",
-  "family": "NostalgiaScript-Regular",
-  "file": "fonts/bundle/nostalgia-script/nostalgiascript-regular.ttf",
+  "slug": "nostalgia-script",
+  "family": "Nostalgia Script",
+  "file": "fonts/bundle/nostalgia-script/NostalgiaScript-Regular.ttf",
   "format": "ttf",
   "bytes": 196708,
   "weight": 400,
@@ -726,20 +726,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "papa-sardine-1",
-  "family": "Papa Sardine",
-  "file": "fonts/bundle/papa-sardine/papa sardine.otf",
-  "format": "otf",
-  "bytes": 34388,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "papa-sardine-2",
-  "family": "Papa Sardine",
-  "file": "fonts/bundle/papa-sardine/papa sardine raw.otf",
+  "slug": "papa-sardine",
+  "family": "Papa Sardine Raw",
+  "file": "fonts/bundle/papa-sardine/Papa Sardine Raw.otf",
   "format": "otf",
   "bytes": 359644,
   "weight": 400,
@@ -748,9 +737,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
+  "slug": "papa-sardine",
+  "family": "Papa Sardine",
+  "file": "fonts/bundle/papa-sardine/Papa Sardine.otf",
+  "format": "otf",
+  "bytes": 34388,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
   "slug": "picofontico",
   "family": "PICOFONTICO",
-  "file": "fonts/bundle/picofontico/regular.ttf",
+  "file": "fonts/bundle/picofontico/PICOFONTICO.ttf",
   "format": "ttf",
   "bytes": 14788,
   "weight": 400,
@@ -761,18 +761,18 @@
  {
   "slug": "praegefest",
   "family": "Praegefest",
-  "file": "fonts/bundle/praegefest/regular.ttf",
+  "file": "fonts/bundle/praegefest/Praegefest.ttf",
   "format": "ttf",
   "bytes": 62824,
-  "weight": 400,
+  "weight": 600,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
   "slug": "pralampita",
-  "family": "Pralampita-Regular",
-  "file": "fonts/bundle/pralampita/regular.otf",
+  "family": "Pralampita",
+  "file": "fonts/bundle/pralampita/Pralampita-Regular.otf",
   "format": "otf",
   "bytes": 100856,
   "weight": 400,
@@ -781,20 +781,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "rahull-1",
+  "slug": "rahull",
   "family": "Rahull",
-  "file": "fonts/bundle/rahull/rahull.ttf",
-  "format": "ttf",
-  "bytes": 34696,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "rahull-2",
-  "family": "Rahull",
-  "file": "fonts/bundle/rahull/rahull.otf",
+  "file": "fonts/bundle/rahull/Rahull.otf",
   "format": "otf",
   "bytes": 20152,
   "weight": 400,
@@ -803,9 +792,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
+  "slug": "rahull",
+  "family": "Rahull",
+  "file": "fonts/bundle/rahull/Rahull.ttf",
+  "format": "ttf",
+  "bytes": 34696,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
   "slug": "resland",
   "family": "Resland",
-  "file": "fonts/bundle/resland/regular.otf",
+  "file": "fonts/bundle/resland/Resland.otf",
   "format": "otf",
   "bytes": 237632,
   "weight": 400,
@@ -816,18 +816,40 @@
  {
   "slug": "seraphine",
   "family": "Seraphine",
-  "file": "fonts/bundle/seraphine/regular.otf",
+  "file": "fonts/bundle/seraphine/Seraphine.otf",
   "format": "otf",
   "bytes": 48828,
-  "weight": 400,
+  "weight": 700,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "sunny-brunch-1",
-  "family": "SunnyBrunch-Regular",
-  "file": "fonts/bundle/sunny-brunch/sunnybrunch-regular.ttf",
+  "slug": "sunny-brunch",
+  "family": "Sunny Brunch",
+  "file": "fonts/bundle/sunny-brunch/SunnyBrunch-Bold.ttf",
+  "format": "ttf",
+  "bytes": 71972,
+  "weight": 700,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "sunny-brunch",
+  "family": "Sunny Brunch",
+  "file": "fonts/bundle/sunny-brunch/SunnyBrunch-Medium.ttf",
+  "format": "ttf",
+  "bytes": 72220,
+  "weight": 500,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "sunny-brunch",
+  "family": "Sunny Brunch",
+  "file": "fonts/bundle/sunny-brunch/SunnyBrunch-Regular.ttf",
   "format": "ttf",
   "bytes": 72132,
   "weight": 400,
@@ -836,53 +858,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "sunny-brunch-2",
-  "family": "SunnyBrunch-Regular",
-  "file": "fonts/bundle/sunny-brunch/sunnybrunch-bold.ttf",
-  "format": "ttf",
-  "bytes": 71972,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "sunny-brunch-3",
-  "family": "SunnyBrunch-Regular",
-  "file": "fonts/bundle/sunny-brunch/sunnybrunch-semibold.ttf",
+  "slug": "sunny-brunch",
+  "family": "Sunny Brunch",
+  "file": "fonts/bundle/sunny-brunch/SunnyBrunch-SemiBold.ttf",
   "format": "ttf",
   "bytes": 72104,
-  "weight": 400,
+  "weight": 600,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "sunny-brunch-4",
-  "family": "SunnyBrunch-Regular",
-  "file": "fonts/bundle/sunny-brunch/sunnybrunch-medium.ttf",
-  "format": "ttf",
-  "bytes": 72220,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "thernaly-1",
-  "family": "Thernaly-Regular",
-  "file": "fonts/bundle/thernaly/thernaly-regular.otf",
-  "format": "otf",
-  "bytes": 51716,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "thernaly-2",
-  "family": "Thernaly-Regular",
-  "file": "fonts/bundle/thernaly/thernaly-italic.otf",
+  "slug": "thernaly",
+  "family": "Thernaly",
+  "file": "fonts/bundle/thernaly/Thernaly-Italic.otf",
   "format": "otf",
   "bytes": 54984,
   "weight": 400,
@@ -891,9 +880,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "thernaly-3",
-  "family": "Thernaly-Regular",
-  "file": "fonts/bundle/thernaly/thernaly-italic.ttf",
+  "slug": "thernaly",
+  "family": "Thernaly",
+  "file": "fonts/bundle/thernaly/Thernaly-Italic.ttf",
   "format": "ttf",
   "bytes": 54984,
   "weight": 400,
@@ -902,9 +891,20 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "thernaly-4",
-  "family": "Thernaly-Regular",
-  "file": "fonts/bundle/thernaly/thernaly-regular.ttf",
+  "slug": "thernaly",
+  "family": "Thernaly",
+  "file": "fonts/bundle/thernaly/Thernaly-Regular.otf",
+  "format": "otf",
+  "bytes": 51716,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "thernaly",
+  "family": "Thernaly",
+  "file": "fonts/bundle/thernaly/Thernaly-Regular.ttf",
   "format": "ttf",
   "bytes": 51716,
   "weight": 400,
@@ -913,20 +913,9 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "waloh-1",
-  "family": "Waloh-TTF",
-  "file": "fonts/bundle/waloh/waloh-ttf.ttf",
-  "format": "ttf",
-  "bytes": 37860,
-  "weight": 400,
-  "style": "normal",
-  "license": "Freeware (bundled via 1001fonts.com)",
-  "sourceRef": "1001fonts.com"
- },
- {
-  "slug": "waloh-2",
-  "family": "Waloh-TTF",
-  "file": "fonts/bundle/waloh/waloh-otf.otf",
+  "slug": "waloh",
+  "family": "Waloh",
+  "file": "fonts/bundle/waloh/Waloh-OTF.otf",
   "format": "otf",
   "bytes": 26976,
   "weight": 400,
@@ -935,45 +924,56 @@
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "zingende-1",
-  "family": "Zingende Bd It",
-  "file": "fonts/bundle/zingende/zingende bd it.otf",
+  "slug": "waloh",
+  "family": "Waloh",
+  "file": "fonts/bundle/waloh/Waloh-TTF.ttf",
+  "format": "ttf",
+  "bytes": 37860,
+  "weight": 400,
+  "style": "normal",
+  "license": "Freeware (bundled via 1001fonts.com)",
+  "sourceRef": "1001fonts.com"
+ },
+ {
+  "slug": "zingende",
+  "family": "Zingende",
+  "file": "fonts/bundle/zingende/Zingende Bd It.otf",
   "format": "otf",
   "bytes": 34776,
-  "weight": 400,
-  "style": "normal",
+  "weight": 700,
+  "style": "italic",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "zingende-2",
-  "family": "Zingende Bd It",
-  "file": "fonts/bundle/zingende/zingende bd.otf",
+  "slug": "zingende",
+  "family": "Zingende",
+  "file": "fonts/bundle/zingende/Zingende Bd.otf",
   "format": "otf",
   "bytes": 33600,
-  "weight": 400,
+  "weight": 700,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "zingende-1",
-  "family": "Zingende Bd It",
-  "file": "fonts/bundle/zingende/zingende bd it.otf",
+  "slug": "zingende",
+  "family": "Zingende",
+  "file": "fonts/bundle/zingende/Zingende Bd It.otf",
   "format": "otf",
   "bytes": 34776,
-  "weight": 400,
-  "style": "normal",
+  "weight": 700,
+  "style": "italic",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"
  },
  {
-  "slug": "zingende-2",
-  "family": "Zingende Bd It",
-  "file": "fonts/bundle/zingende/zingende bd.otf",
+  "slug": "zingende",
+  "family": "Zingende",
+  "file": "fonts/bundle/zingende/Zingende Bd.otf",
   "format": "otf",
   "bytes": 33600,
-  "weight": 400,
+  "weight": 700,
   "style": "normal",
   "license": "Freeware (bundled via 1001fonts.com)",
   "sourceRef": "1001fonts.com"

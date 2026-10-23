@@ -11,7 +11,10 @@ const PresenterViewPage = lazy(() => import('@/pages/PresenterViewPage'))
 
 const HomeGate = lazy(() => import('@/pages/synkra/HomeGate'))
 const VideoEditorPage = lazy(() => import('@/pages/synkra/VideoEditorPage'))
-const AiStudioPage = lazy(() => import('@/pages/synkra/AiStudioPage'))
+const AgentHomePage = lazy(() => import('@/pages/synkra/agent/AgentHomePage'))
+const AgentProjectPage = lazy(() => import('@/pages/synkra/agent/AgentProjectPage'))
+const AgentSkillsPage = lazy(() => import('@/pages/synkra/agent/AgentSkillsPage'))
+const AgentDesignSystemsPage = lazy(() => import('@/pages/synkra/agent/AgentDesignSystemsPage'))
 const LandingPage = lazy(() => import('@/pages/LandingPage'))
 const TemplatesPage = lazy(() => import('@/pages/TemplatesPage'))
 const FeaturesPage = lazy(() => import('@/pages/FeaturesPage'))
@@ -60,7 +63,11 @@ export const routes: RouteObject[] = [
       },
       // Future product areas — working routes with polished placeholders, no functionality yet.
       { path: 'video-editor', element: page(<VideoEditorPage />) },
-      { path: 'ai-studio', element: page(<AiStudioPage />) },
+      // SYNKRA Agent Studio (powered by OpenDesign) — the AI design agent workspace.
+      { path: 'ai-studio', element: page(<AgentHomePage />) },
+      { path: 'ai-studio/skills', element: page(<AgentSkillsPage />) },
+      { path: 'ai-studio/design-systems', element: page(<AgentDesignSystemsPage />) },
+      { path: 'ai-studio/projects/:id', element: page(<AgentProjectPage />) },
       {
         element: <AuthLayout />,
         children: [

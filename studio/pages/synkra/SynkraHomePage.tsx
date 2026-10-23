@@ -87,12 +87,12 @@ export default function SynkraHomePage() {
             <Sparkles size={22} />
           </span>
           <h2 id="home-ai" className={styles.cardTitle}>
-            AI Studio
+            Agent Studio
           </h2>
-          <span className={`${styles.cardEyebrow} ${styles.soonBadge}`}>Coming soon</span>
-          <p className={styles.cardText}>AI-assisted design tools are on their way to Synkra Design.</p>
+          <span className={styles.cardEyebrow}>Powered by OpenDesign</span>
+          <p className={styles.cardText}>Brief an AI design agent — it plans, builds and refines prototypes, decks, dashboards and images with you.</p>
           <Link to="/ai-studio" className={styles.cardLink}>
-            See what’s planned
+            Open Agent Studio
             <ArrowUpRight aria-hidden="true" />
           </Link>
         </section>

@@ -4,6 +4,7 @@ import { authHandlers, tokenHandlers, deleteToken } from '@/server/auth'
 import { designHandlers, folderHandlers } from '@/server/designs'
 import { shareHandlers } from '@/server/sharing'
 import { assetHandlers, brandHandlers, templateHandlers, elementHandlers, fontHandlers, miscHandlers } from '@/server/library'
+import { odHandlers } from '@/server/od'
 import { db } from '@/lib/db'
 import { readDoc } from '@/server/designs'
 
@@ -24,6 +25,7 @@ const TABLES: Array<Record<string, Handler>> = [
   elementHandlers as unknown as Record<string, Handler>,
   fontHandlers as unknown as Record<string, Handler>,
   miscHandlers as unknown as Record<string, Handler>,
+  odHandlers as unknown as Record<string, Handler>,
 ]
 
 /** Internal endpoints for the realtime room service (Bearer service token). */

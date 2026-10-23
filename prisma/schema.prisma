@@ -35,6 +35,7 @@ model User {
   apiTokens  ApiToken[]
   comments   Comment[]
   authTokens AuthToken[]
+  odProjects OdProject[]
 }
 
 model Session {
@@ -316,4 +317,65 @@ model EmailMessage {
   kind      String   @default("")
   status    String   @default("queued") // queued | sent | failed
   createdAt DateTime @default(now())
+}
+
+// ---------------------------------------------------------------------------
+// SYNKRA Agent Studio (powered by OpenDesign)
+// Adapted from nexu-io/open-design (Apache-2.0): the agent workspace models a
+// brief → clarify → plan → artifact loop with streamed artifacts per project.
+// ---------------------------------------------------------------------------
+
+model OdProject {
+  id             String   @id @default(uuid())
+  ownerId        String
+  owner          User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title          String   @default("Untitled project")
+  brief          String   @default("")
+  kind           String   @default("prototype") // prototype | deck | dashboard | document | image | video | other
+  skillId        String? // vendored skill slug (content/opendesign/skills or design-templates)
+  designSystemId String? // vendored design-system slug (content/opendesign/design-systems)
+  direction      String? // OD visual direction: editorial-monocle | modern-minimal | human-approachable | tech-utility | brutalist-experimental
+  status         String   @default("draft") // draft | running | ready | error
+  trashedAt      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  messages  OdMessage[]
+  artifacts OdArtifact[]
+
+  @@index([ownerId, trashedAt])
+}
+
+model OdMessage {
+  id          String    @id @default(uuid())
+  projectId   String
+  project     OdProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  role        String // user | assistant
+  content     String    @default("")
+  // Serialized JSON: submitted form answers ([form answers — …]), question form state,
+  // todo list snapshots, and artifact references `{identifier, kind, title, artifactId}`.
+  formAnswers String    @default("")
+  todos       String    @default("[]")
+  artifacts   String    @default("[]")
+  error       String    @default("")
+  createdAt   DateTime  @default(now())
+
+  @@index([projectId, createdAt])
+}
+
+model OdArtifact {
+  id         String    @id @default(uuid())
+  projectId  String
+  project    OdProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  identifier String // OD artifact identifier (semantic filename, e.g. investor-pitch-deck)
+  kind       String // html | deck | markdown-document | svg | code-snippet | mini-app | design-system | image
+  title      String    @default("")
+  content    String    @default("")
+  mediaPath  String? // generated binary media (images) under media/od/
+  version    Int       @default(1)
+  status     String    @default("complete") // streaming | complete | error
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([projectId, identifier])
 }

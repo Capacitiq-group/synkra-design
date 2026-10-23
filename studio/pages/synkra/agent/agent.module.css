@@ -1,0 +1,875 @@
+/* SYNKRA Agent Studio (powered by OpenDesign) — Soft Bento Minimalism.
+   Uses the shared shell tokens from studio/styles/synkra.css. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 4px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---------- header ---------- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px 4px 0;
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(24px, 4vw, 30px);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.byline {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-text-muted);
+}
+
+.lead {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  max-width: 68ch;
+}
+
+/* ---------- bento card ---------- */
+
+.card {
+  border-radius: var(--radius-bento);
+  background: var(--synkra-card);
+  border: 1px solid var(--synkra-card-border);
+  box-shadow: var(--synkra-shadow-bento);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.cardTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.cardHint {
+  margin: 0 0 12px;
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+}
+
+/* ---------- hero composer ---------- */
+
+.composerCard {
+  background: var(--synkra-ink);
+  border: 1px solid var(--synkra-dark-border);
+  color: var(--synkra-ink-text);
+  position: relative;
+  overflow: hidden;
+  gap: 14px;
+}
+
+.composerCard::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -70px;
+  inset-inline-end: -70px;
+  inline-size: 190px;
+  block-size: 190px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(214 248 36 / 0.22), transparent 68%);
+  pointer-events: none;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+}
+
+.brief {
+  width: 100%;
+  min-height: 96px;
+  resize: vertical;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-dark-border);
+  background: rgb(255 255 255 / 0.06);
+  color: var(--synkra-ink-text);
+  padding: 14px 16px;
+  font: inherit;
+  font-size: 14.5px;
+  line-height: 1.5;
+  outline: none;
+}
+
+.brief::placeholder {
+  color: rgb(251 251 252 / 0.45);
+}
+
+.brief:focus-visible {
+  border-color: var(--synkra-lime);
+}
+
+.optionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.optionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgb(251 251 252 / 0.55);
+  margin-inline-end: 2px;
+}
+
+.pillSelect {
+  appearance: none;
+  border-radius: 9999px;
+  border: 1px solid var(--synkra-dark-border);
+  background: rgb(255 255 255 / 0.08);
+  color: var(--synkra-ink-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 30px 7px 14px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23fbfbfc' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.pillSelect option {
+  color: var(--synkra-ink);
+  background: #fff;
+}
+
+.composerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.exampleChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  border: 1px solid var(--synkra-dark-border);
+  background: rgb(255 255 255 / 0.07);
+  color: var(--synkra-ink-text);
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 13px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.chip:hover {
+  background: rgb(214 248 36 / 0.14);
+  border-color: rgb(214 248 36 / 0.5);
+}
+
+/* ---------- layout grids ---------- */
+
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .grid12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .span8 { grid-column: span 8; }
+  .span4 { grid-column: span 4; }
+  .span6 { grid-column: span 6; }
+  .span12 { grid-column: span 12; }
+}
+
+/* ---------- project tiles ---------- */
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+
+.projectTile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  min-width: 0;
+}
+
+.projectTile:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--synkra-shadow-float);
+}
+
+.projectTileTitle {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-text);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.projectTileMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.kindBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2.5px 8px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: var(--synkra-lime-soft);
+  color: var(--synkra-lime-fg);
+  text-transform: capitalize;
+}
+
+.statusBadge {
+  padding: 2.5px 8px;
+  border-radius: 9999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  background: rgb(0 0 0 / 0.05);
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.statusRunning {
+  background: var(--synkra-peach);
+  color: #7c3a12;
+}
+
+/* ---------- library grids ---------- */
+
+.filterRow {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search {
+  flex: 1 1 240px;
+  max-width: 380px;
+  border-radius: 9999px;
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  padding: 9px 16px;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--color-text);
+  outline: none;
+}
+
+.search:focus-visible {
+  border-color: var(--synkra-lime);
+}
+
+.libraryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 12px;
+}
+
+.libCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  color: inherit;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.libCard:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--synkra-shadow-float);
+}
+
+.libCardName {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.libCardDesc {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.swatchRow {
+  display: flex;
+  gap: 4px;
+}
+
+.swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px solid rgb(0 0 0 / 0.08);
+}
+
+.tagRow {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2.5px 8px;
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.05);
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+/* ---------- detail overlay ---------- */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: flex-end;
+  background: rgb(21 22 26 / 0.42);
+  backdrop-filter: blur(2px);
+}
+
+.sheet {
+  width: min(720px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  background: var(--synkra-card);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--synkra-shadow-float);
+}
+
+.sheetHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sheetTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.mdBody {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: var(--synkra-bone);
+  border-radius: var(--radius-inner);
+  padding: 16px;
+  max-height: 46vh;
+  overflow: auto;
+}
+
+.framePreview {
+  width: 100%;
+  height: 420px;
+  border: 1px solid var(--synkra-card-border);
+  border-radius: var(--radius-inner);
+  background: #fff;
+}
+
+/* ---------- project studio (chat + artifact) ---------- */
+
+.studioGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .studioGrid {
+    grid-template-columns: minmax(300px, 5fr) minmax(0, 7fr);
+  }
+}
+
+.chatColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 60vh;
+}
+
+.stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px;
+  overflow-y: auto;
+  max-height: 68vh;
+  scroll-behavior: smooth;
+}
+
+.turn {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bubble {
+  border-radius: 18px;
+  padding: 12px 15px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  max-width: 92%;
+  word-break: break-word;
+}
+
+.bubbleUser {
+  align-self: flex-end;
+  background: var(--synkra-ink);
+  color: var(--synkra-ink-text);
+  border-bottom-right-radius: 6px;
+}
+
+.bubbleAgent {
+  align-self: flex-start;
+  background: var(--synkra-bone);
+  color: var(--color-text);
+  border: 1px solid var(--synkra-card-border);
+  border-bottom-left-radius: 6px;
+}
+
+.statusLine {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+/* todo card */
+
+.todoCard {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 92%;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-card);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.todoTitle {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-text-muted);
+}
+
+.todoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.todoCheck {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-text-muted);
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  color: #fff;
+}
+
+.todoDone .todoCheck {
+  background: var(--synkra-lime);
+  border-color: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+}
+
+.todoActive .todoCheck {
+  border-color: var(--synkra-ink);
+}
+
+/* question form */
+
+.formCard {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 92%;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formTitle {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.formQuestion {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.formQuestionLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.optionChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.optionChip {
+  border: 1.5px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  border-radius: 9999px;
+  padding: 7px 13px;
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 100ms ease, background 100ms ease;
+}
+
+.optionChip:hover {
+  border-color: var(--color-text-muted);
+}
+
+.optionChipSelected {
+  background: var(--synkra-lime);
+  border-color: var(--synkra-lime);
+  color: var(--synkra-lime-fg);
+}
+
+.formInput {
+  border-radius: 12px;
+  border: 1.5px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  padding: 9px 13px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+}
+
+.formInput:focus-visible {
+  border-color: var(--synkra-lime);
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.lockedNote {
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+}
+
+/* artifact cards inline */
+
+.artifactChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.artifactChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 14px;
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-card);
+  color: var(--color-text);
+  padding: 8px 13px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.artifactChip:hover {
+  box-shadow: var(--synkra-shadow-bento);
+}
+
+/* composer */
+
+.composerBar {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  border-radius: var(--radius-inner);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-card);
+  padding: 10px;
+}
+
+.composerInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+  min-height: 40px;
+  max-height: 160px;
+  padding: 6px 4px;
+}
+
+/* ---------- artifact pane ---------- */
+
+.artifactPane {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 60vh;
+}
+
+.artifactHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.artifactName {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.artifactName span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.artifactActions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.artifactFrameWrap {
+  border-radius: var(--radius-bento);
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  padding: 10px;
+  flex: 1;
+  min-height: 56vh;
+  display: flex;
+}
+
+.artifactFrame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  border-radius: calc(var(--radius-bento) - 8px);
+  background: #fff;
+}
+
+.artifactRail {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.railItem {
+  flex: none;
+  max-width: 190px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  border: 1px solid var(--synkra-card-border);
+  background: var(--synkra-bone);
+  color: var(--color-text-muted);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.railItemActive {
+  background: var(--synkra-ink);
+  border-color: var(--synkra-ink);
+  color: var(--synkra-ink-text);
+}
+
+.emptyPane {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 24px;
+}
+
+/* ---------- utilities ---------- */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.linkButton:hover {
+  background: var(--synkra-bone);
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 640px) {
+  .stream { max-height: none; }
+  .sheet { width: 100%; }
+}
+
+.spin {
+  animation: agentSpin 900ms linear infinite;
+}
+
+@keyframes agentSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
